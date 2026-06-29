@@ -19,5 +19,4 @@ class AppColors {
   static const Color Dark_Red_500           = Color(0xffBF0011);
   static const Color Dark_Red_700           = Color(0xff7F000B);
   static const Color Dark_Red_900           = Color(0xff400006);
-
 }

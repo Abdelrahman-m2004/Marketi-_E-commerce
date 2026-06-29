@@ -45,6 +45,4 @@ class AppImages {
   static const String Headphones               = 'assets/images/Headphones@4x.png';
   static const String Smart_Watch              = 'assets/images/Smart_Watch@4x.png';
   static const String Ellipse1                 = 'assets/images/Ellipse 1.png';
-
-
 }
