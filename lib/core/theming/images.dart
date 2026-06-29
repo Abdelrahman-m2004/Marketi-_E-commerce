@@ -1,0 +1,50 @@
+class AppImages {
+  static const String logo                     = 'assets/images/Logo_Splash_Screen.png';
+  static const String onboarding1              = 'assets/images/Illustration_Onboarding_1.png';
+  static const String onboarding2              = 'assets/images/Illustration_Onboarding_2.png';
+  static const String onboarding3              = 'assets/images/Illustration_Onboarding_3.png';
+  static const String Logo_Log_In              = 'assets/images/Logo_Log_In.png';
+  static const String Logo_Sign_Up             = 'assets/images/Logo_Sign_Up.png';
+  static const String Forgot_Password_phone    = 'assets/images/Illustration_Forgot_Password_With_Phone.png';
+  static const String Forgot_Password_email    = 'assets/images/Illustration_Forgot_Password_With_Email.png';
+  static const String Verification_Code_phone  = 'assets/images/Illustration_Verification_Code_With_Phone.png';
+  static const String Verification_Code_email  = 'assets/images/Illustration_Verification_Code_With_Email.png';
+  static const String Create_New_Password      = 'assets/images/Illustration_Create_New_Password.png';
+  static const String Congratulations          = 'assets/images/Illustration_Congratulations.png';
+  static const String Cart_Empty               = 'assets/images/Illustration_Cart_Empty.png';
+  static const String Success_Order            = 'assets/images/Illustration_Success_Order@4x.png';
+  static const String Search_Not_Found         = 'assets/images/Illustration_Search_Not_Found.png';
+  static const String Sony_Logo                = 'assets/images/Sony_Logo@4x.png';
+  static const String Twon_Team_Logo           = 'assets/images/Twon_Team_Logo@4x.png';
+  static const String Pampers_Logo             = 'assets/images/Pampers_Logo@4x.png';
+  static const String Apple_Logo               = 'assets/images/Apple_Logo@4x.png';
+  static const String LACOSTE_Logo             = 'assets/images/LACOSTE_Logo@4x.png';
+  static const String JBL_Logo                 = 'assets/images/JBL_Logo@4x.png';
+  static const String Canon_Logo               = 'assets/images/Canon_Logo@4x.png';
+  static const String Adidas_Logo              = 'assets/images/Adidas_Logo@4x.png';
+  static const String TOSHIBA_Logo             = 'assets/images/TOSHIBA_Logo@4x.png';
+  static const String HP_Logo                  = 'assets/images/HP_Logo@4x.png';
+  static const String Pampers                  = 'assets/images/Pampers@4x.png';
+  static const String Electronics              = 'assets/images/Electronics@4x.png';
+  static const String Furniture                = 'assets/images/Furniture@4x.png';
+  static const String Food                     = 'assets/images/Food@4x.png';
+  static const String Plant                    = 'assets/images/Plant@4x.png';
+  static const String Jbl_Sounds               = 'assets/images/Jbl_Sounds@4x.png';
+  static const String Phone                    = 'assets/images/Phone@4x.png';
+  static const String Fashion                  = 'assets/images/Fashion@4x.png';
+  static const String Pampers1                 = 'assets/images/Pampers@4x (1).png';
+  static const String PC                       = 'assets/images/PC@4x.png';
+  static const String iPhone_11_Pro            = 'assets/images/iPhone_11_Pro@4x.png';
+  static const String Air_Buds_Pic             = 'assets/images/Air_Buds_Pic@4x.png';
+  static const String Pampers_Swaddlers        = 'assets/images/Pampers_Swaddlers@4x.png';
+  static const String Pampers_Seventh          = 'assets/images/Pampers_Seventh_Generation@4x.png';
+  static const String Future_Seventh           = 'assets/images/Future_Seventh_Generation@4x.png';
+  static const String Camera                   = 'assets/images/Camera@4x.png';
+  static const String Smart_Tv                 = 'assets/images/Smart_Tv@4x.png';
+  static const String Laptop_HP                = 'assets/images/Laptop_HP_Chromebook_laptop@4x.png';
+  static const String Headphones               = 'assets/images/Headphones@4x.png';
+  static const String Smart_Watch              = 'assets/images/Smart_Watch@4x.png';
+  static const String Ellipse1                 = 'assets/images/Ellipse 1.png';
+
+
+}
