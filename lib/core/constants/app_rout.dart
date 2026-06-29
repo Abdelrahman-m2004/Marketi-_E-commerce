@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:marketi/core/common/widget/custom_navigationbar.dart';
+import 'package:marketi/features/home/presentation/view/home_view.dart';
 
 class AppRouter {
   Route? generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      // case AppRoute.onBoarding:
-      //   return MaterialPageRoute(builder: (_) => const Onboarding());
-      // default:
-      //   return null;
-    }
-    
+      case AppRoute.homeview:
+        return MaterialPageRoute(builder: (_) => const HomeView());
+      case AppRoute.navigationbar:
+        return MaterialPageRoute(builder: (_) => const CustomNavigationbar());
+      default:
+        return null;
+    }    
   }
 }
 
 class AppRoute {
-  static const String onBoarding = '/Onboarding';
+  static const String homeview = '/homeview';
+  static const String navigationbar = '/navigationbar';
 }

@@ -14,37 +14,37 @@ class Apiconstant {
   static const String home = '/home';
   static const String search_product = '/search?q=headphones';
   static const String List_category = 'categories';
-  static String category_products(int catigory_id) =>
-      '/categories/${catigory_id}/products';
+  static String category_products(int catigoryId) =>
+      '/categories/$catigoryId/products';
   static const String List_Brands = '/brands';
   static const String List_products = '/products';
-  static String product_details(int product_id) => '/products/${product_id}';
-  static String product_ratings(int product_id) =>
-      '/products/${product_id}/ratings';
+  static String product_details(int productId) => '/products/$productId';
+  static String product_ratings(int productId) =>
+      '/products/$productId/ratings';
   static const String delivery_slots = '/delivery-slots';
   static const String FAQs = '/faqs';
 
   // cart & checkout Endpoint
   static const String view_cart = '/cart';
   static const String add_to_cart = '/cart/items';
-  static String updata_cart_item(int item_id) => '/cart/items/${item_id}';
+  static String updata_cart_item(int itemId) => '/cart/items/$itemId';
   static const String place_order = '/orders';
-  static String Retry_payment_link(int order_id) =>
-      '/orders/${order_id}/payment/retry';
+  static String Retry_payment_link(int orderId) =>
+      '/orders/$orderId/payment/retry';
   static const String list_order = '/orders';
-  static String order_details(int order_id) => '/orders/${order_id}';
-  static String cancel_order(int order_id) => '/orders/${order_id}/cancel';
+  static String order_details(int orderId) => '/orders/$orderId';
+  static String cancel_order(int orderId) => '/orders/$orderId/cancel';
 
   //payments EndPoint
   static const String List_my_payments = '/payments';
-  static String payment_details(int payment_id) => '/payments/${payment_id}';
-  static String paypal_success_callback(int payment_id) =>
-      '/payments/paypal/success/${payment_id}';
+  static String payment_details(int paymentId) => '/payments/$paymentId';
+  static String paypal_success_callback(int paymentId) =>
+      '/payments/paypal/success/$paymentId';
   static const String paypal_webhook = '/payments/paypal/webhook';
-  static String mock_checkout(int payment_id) =>
-      '/payments/mock/${payment_id}/checkout';
-  static String mock_complete_payment(int payment_id) =>
-      '/payments/mock/${payment_id}/complete';
+  static String mock_checkout(int paymentId) =>
+      '/payments/mock/$paymentId/checkout';
+  static String mock_complete_payment(int paymentId) =>
+      '/payments/mock/$paymentId/complete';
 
   //profile & favourites Endpoint
   static const String get_profile = '/profile';
@@ -52,8 +52,8 @@ class Apiconstant {
   static const String change_profile = '/profile/password';
   static const String list_favorites = '/favorites';
   static const String add_favorites = '/favorites';
-  static String rate_product(int product_id) =>
-      '/products/${product_id}}/ratings';
+  static String rate_product(int productId) =>
+      '/products/$productId}/ratings';
 
   // Support & subscriptions Endpoint
   static const String subscription_plans = '/subscription-plans';
@@ -68,8 +68,8 @@ class Apiconstant {
   static const String create_category = '/admin/categories';
   static const String list_products = '/admin/products';
   static const String list_orders = '/admin/orders';
-  static String Update_order_status(int order_id) =>
-      '/admin/orders/${order_id}/status';
+  static String Update_order_status(int orderId) =>
+      '/admin/orders/$orderId/status';
   static const String paymets_revenue = '/admin/payments/revenue';
   static const String sand_notification = '/admin/notifications';
   static const String support_tickets = '/admin/support/tickets';

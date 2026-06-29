@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:marketi/features/home/presentation/view/home_view.dart';
 
 class CustomNavigationbar extends StatefulWidget {
+  static const String routename = '/navigationbar';
+
   const CustomNavigationbar({super.key});
 
   @override
@@ -9,15 +12,20 @@ class CustomNavigationbar extends StatefulWidget {
 
 class _CustomNavigationbarState extends State<CustomNavigationbar> {
   int index = 0;
+  List<Widget> pages = [HomeView()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+      body: IndexedStack(index: index, children: pages),
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
           labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>((states) {
             if (states.contains(WidgetState.selected)) {
-              return const TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Colors.blueAccent);
+              return const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Colors.blueAccent,
+              );
             }
             return const TextStyle(fontSize: 14);
           }),
@@ -38,8 +46,17 @@ class _CustomNavigationbarState extends State<CustomNavigationbar> {
             height: 85,
             destinations: [
               NavigationDestination(
-                icon: Icon(Icons.house_outlined, size: 32, fontWeight: FontWeight(600)),
-                selectedIcon: Icon(Icons.house_outlined,size: 32, fontWeight: FontWeight(600),color: Colors.blue,),
+                icon: Icon(
+                  Icons.house_outlined,
+                  size: 32,
+                  fontWeight: FontWeight(600),
+                ),
+                selectedIcon: Icon(
+                  Icons.house_outlined,
+                  size: 32,
+                  fontWeight: FontWeight(600),
+                  color: Colors.blue,
+                ),
                 label: 'Home',
               ),
               NavigationDestination(
@@ -47,9 +64,13 @@ class _CustomNavigationbarState extends State<CustomNavigationbar> {
                   Icons.shopping_cart_outlined,
                   size: 32,
                   fontWeight: FontWeight(600),
-                  
                 ),
-                selectedIcon: Icon(Icons.shopping_cart_outlined,size: 32, fontWeight: FontWeight(600),color: Colors.blue,),
+                selectedIcon: Icon(
+                  Icons.shopping_cart_outlined,
+                  size: 32,
+                  fontWeight: FontWeight(600),
+                  color: Colors.blue,
+                ),
                 label: 'Cart',
               ),
               NavigationDestination(
@@ -58,12 +79,22 @@ class _CustomNavigationbarState extends State<CustomNavigationbar> {
                   size: 32,
                   fontWeight: FontWeight(600),
                 ),
-                selectedIcon: Icon(Icons.favorite,size: 32, fontWeight: FontWeight(600),color: Colors.blue,),
+                selectedIcon: Icon(
+                  Icons.favorite,
+                  size: 32,
+                  fontWeight: FontWeight(600),
+                  color: Colors.blue,
+                ),
                 label: 'Favorite',
               ),
               NavigationDestination(
                 icon: Icon(Icons.menu, size: 32, fontWeight: FontWeight(600)),
-                selectedIcon: Icon(Icons.menu,size: 32, fontWeight: FontWeight(600),color: Colors.blue,),
+                selectedIcon: Icon(
+                  Icons.menu,
+                  size: 32,
+                  fontWeight: FontWeight(600),
+                  color: Colors.blue,
+                ),
                 label: 'Menu',
               ),
             ],
@@ -73,5 +104,3 @@ class _CustomNavigationbarState extends State<CustomNavigationbar> {
     );
   }
 }
-
-

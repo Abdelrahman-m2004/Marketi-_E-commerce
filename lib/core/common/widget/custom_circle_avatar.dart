@@ -16,8 +16,8 @@ class CustomCircleAvatar extends StatelessWidget {
                 ),
               ),
       child: Image.asset(imagePath,
-      width: 40,
-      height: 40,
+      width: 48,
+      height: 48,
       ),
     );
   }
