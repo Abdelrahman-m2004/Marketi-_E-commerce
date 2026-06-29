@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:marketi/core/common/widget/custom_navigationbar.dart';
 import 'package:marketi/core/constants/app_rout.dart';
+import 'package:marketi/features/brands/presentation/views/brands_screen.dart';
 
 class MarketiECommerce extends StatelessWidget {
   final AppRouter appRouter;
@@ -13,11 +13,9 @@ class MarketiECommerce extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      // onGenerateRoute: appRouter.generateRoute,
-      //   initialRoute: initialRoute,
-        home: CustomNavigationbar()
+      home: BrandsScreen(),
     );
   }
 }
