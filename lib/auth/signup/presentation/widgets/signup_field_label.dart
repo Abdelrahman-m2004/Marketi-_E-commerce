@@ -11,7 +11,7 @@ class SignupFieldLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       label,
-      style: AppFonts.bodyMedium.copyWith(color: AppColors.Dark_Blue_900),
+      style: AppFonts.captionBold.copyWith(color: AppColors.Dark_Blue_900),
     );
   }
 }

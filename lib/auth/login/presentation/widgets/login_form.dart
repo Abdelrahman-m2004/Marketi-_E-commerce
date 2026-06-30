@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:marketi/auth/forgot_password/presentation/views/forgot_password_view.dart';
 import 'package:marketi/auth/login/presentation/widgets/login_remember_row.dart';
 import 'package:marketi/auth/login/presentation/widgets/login_text_field.dart';
 import 'package:marketi/core/common/widget/custom_primary_app_button.dart';
@@ -59,7 +60,10 @@ class _LoginFormState extends State<LoginForm> {
           rememberMe: _rememberMe,
           onRememberChanged: (val) => setState(() => _rememberMe = val ?? false),
           onForgotPassword: () {
-            // TODO: Navigate to forgot password
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const ForgotPasswordView()),
+            );
           },
         ),
         const SizedBox(height: 14),

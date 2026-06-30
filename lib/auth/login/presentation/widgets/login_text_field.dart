@@ -32,18 +32,18 @@ class LoginTextField extends StatelessWidget {
         hintText: hintText,
         hintStyle: AppFonts.bodyLarge.copyWith(color: AppColors.light_gray),
         prefixIcon: Padding(
-          padding: const EdgeInsets.all(13.0),
+          padding: const EdgeInsets.all(16.0),
           child: SvgPicture.asset(
             prefixIconPath,
-            width: 22,
-            height: 22,
+            width: 18,
+            height: 18,
             colorFilter: ColorFilter.mode(AppColors.Gray_Scale, BlendMode.srcIn),
           ),
         ),
         suffixIcon: suffixIcon,
         filled: true,
         fillColor: Colors.white,
-        contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+        contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
           borderSide: BorderSide(color: AppColors.Light_Blue_700, width: 1.2),
