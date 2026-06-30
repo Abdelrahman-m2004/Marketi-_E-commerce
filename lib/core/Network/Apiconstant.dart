@@ -1,5 +1,5 @@
 class Apiconstant {
-  static const String baseUrl = 'http://localhost:8000/api/v1';
+  static const String baseUrl = 'https://marketi.newcinderella.online/api/v1';
 
   //Auth Endpoint
   static const String register = '/register';

@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:marketi/service/flutter_secoure_storge.dart';
+import 'package:marketi/core/service/flutter_secoure_storge.dart';
 
 class AppInterceptor extends Interceptor {
   @override
