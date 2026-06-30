@@ -52,7 +52,7 @@ class onboardingPages extends StatelessWidget {
           SizedBox(height: MediaQuery.of(context).size.height * 0.05),
           CustomPrimaryAppButton(
             buttonText: isLastPage ? 'Get Strat' : 'Next',
-            onpressed: () {
+            onTap: () {
               if (isLastPage) {
                 Navigator.pushNamed(context, '/categoryList');
               } else {
