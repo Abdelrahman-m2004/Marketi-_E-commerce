@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:marketi/features/profile/presentation/cubit/theme_state.dart';
 import 'package:marketi/features/profile/domain/use_case/get_theme_use_case.dart';
 import 'package:marketi/features/profile/domain/use_case/save_theme_use_case.dart';
+import 'package:marketi/features/profile/presentation/cubit/theme_cubit/theme_state.dart';
 
 @injectable
 class ThemeCubit extends Cubit<ThemeState> {

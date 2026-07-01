@@ -5,7 +5,7 @@ import 'package:marketi/core/fonts/AppFonts.dart';
 import 'package:marketi/core/service/service_locator.dart';
 import 'package:marketi/features/profile/presentation/cubit/profile_cubit/profile_cubit.dart';
 import 'package:marketi/features/profile/presentation/cubit/profile_cubit/profile_state.dart';
-import 'package:marketi/features/profile/presentation/cubit/theme_cubit.dart';
+import 'package:marketi/features/profile/presentation/cubit/theme_cubit/theme_cubit.dart';
 import 'package:marketi/features/profile/presentation/views/profile_item.dart';
 
 class ProfileScreen extends StatelessWidget {

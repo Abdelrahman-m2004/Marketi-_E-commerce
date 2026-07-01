@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marketi/core/fonts/AppFonts.dart';
-import 'package:marketi/features/profile/presentation/cubit/theme_cubit.dart';
+import 'package:marketi/features/profile/presentation/cubit/theme_cubit/theme_cubit.dart';
 
 class ProfileItem extends StatelessWidget {
   const ProfileItem({

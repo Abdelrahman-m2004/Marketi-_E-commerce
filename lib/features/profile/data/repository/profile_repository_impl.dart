@@ -3,6 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:marketi/core/error/failure.dart';
 import 'package:marketi/features/profile/data/data_source/local_data_source.dart';
 import 'package:marketi/features/profile/data/data_source/remote_data_source.dart';
+import 'package:marketi/features/profile/data/models/update_profile_request.dart';
 import 'package:marketi/features/profile/domain/entity/profile_entity.dart';
 import 'package:marketi/features/profile/domain/repository/profile_repository.dart';
 
@@ -25,6 +26,18 @@ class ProfileRepositoryImpl implements ProfileRepository {
     try {
       final response = await _remoteDataSource.getProfile();
       return Right(response);
+    } catch (e) {
+      return Left((ServerFailure(e.toString())));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> updateProfile(
+    UpdateProfileRequest updateProfile,
+  ) async {
+    try {
+      await _remoteDataSource.updateProfile(updateProfile);
+      return right(null);
     } catch (e) {
       return Left((ServerFailure(e.toString())));
     }

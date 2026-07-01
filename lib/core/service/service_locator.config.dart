@@ -27,6 +27,8 @@ import 'package:marketi/features/profile/domain/use_case/get_theme_use_case.dart
     as _i132;
 import 'package:marketi/features/profile/domain/use_case/save_theme_use_case.dart'
     as _i914;
+import 'package:marketi/features/profile/domain/use_case/update_profile_use_case.dart'
+    as _i40;
 import 'package:marketi/features/profile/presentation/cubit/profile_cubit/profile_cubit.dart'
     as _i732;
 import 'package:marketi/features/profile/presentation/cubit/theme_cubit/theme_cubit.dart'
@@ -67,6 +69,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i914.SaveThemeUseCase>(
       () => _i914.SaveThemeUseCase(repository: gh<_i789.ProfileRepository>()),
     );
+    gh.lazySingleton<_i40.UpdateProfileUseCase>(
+      () => _i40.UpdateProfileUseCase(gh<_i789.ProfileRepository>()),
+    );
     gh.factory<_i331.ThemeCubit>(
       () => _i331.ThemeCubit(
         gh<_i132.GetThemeUseCase>(),
@@ -74,7 +79,10 @@ extension GetItInjectableX on _i174.GetIt {
       ),
     );
     gh.factory<_i732.ProfileCubit>(
-      () => _i732.ProfileCubit(gh<_i957.GetProfileUseCase>()),
+      () => _i732.ProfileCubit(
+        gh<_i957.GetProfileUseCase>(),
+        gh<_i40.UpdateProfileUseCase>(),
+      ),
     );
     return this;
   }

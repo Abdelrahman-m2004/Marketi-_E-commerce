@@ -15,3 +15,12 @@ class ProfileFailure extends ProfileState {
   final String message;
   ProfileFailure(this.message);
 }
+
+class UpdateProfileLoading extends ProfileState {}
+
+class UpdateProfileSuccess extends ProfileState {}
+
+class UpdateProfileFailure extends ProfileState {
+  final String message;
+  UpdateProfileFailure(this.message);
+}
