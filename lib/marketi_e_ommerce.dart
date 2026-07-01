@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:marketi/core/common/widget/custom_navigationbar.dart';
 import 'package:marketi/core/constants/app_rout.dart';
 import 'package:marketi/core/service/service_locator.dart';
 import 'package:marketi/core/theme/app_theme.dart';
-import 'package:marketi/features/profile/presentation/cubit/theme_cubit.dart';
-import 'package:marketi/features/profile/presentation/cubit/theme_state.dart';
+import 'package:marketi/features/profile/presentation/cubit/theme_cubit/theme_cubit.dart';
+import 'package:marketi/features/profile/presentation/cubit/theme_cubit/theme_state.dart';
 import 'package:marketi/features/profile/presentation/views/profile_screen.dart';
 
 class MarketiECommerce extends StatelessWidget {
@@ -31,7 +32,7 @@ class MarketiECommerce extends StatelessWidget {
 
             // onGenerateRoute: appRouter.generateRoute,
             // initialRoute: initialRoute,
-            home: const ProfileScreen(),
+            home: CustomNavigationbar(),
           );
         },
       ),

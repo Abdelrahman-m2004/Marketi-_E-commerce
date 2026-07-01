@@ -10,9 +10,9 @@ class AppInterceptor extends Interceptor {
     options.headers['Accept'] = 'application/json';
 
     final token = await SecureStorageService.instance.getToken();
-
-    options.headers['Authorization'] =
-        'Bearer 21|d3moqPLkHoZydt7KJUImYOMFne92LzoMWYaUEO75374fe026';
+    if (token != null && token.isNotEmpty) {
+      options.headers['Authorization'] = 'Bearer $token';
+    }
 
     print(options.headers);
     handler.next(options);
