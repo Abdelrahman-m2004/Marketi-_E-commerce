@@ -8,10 +8,10 @@ class AppRouter {
       // default:
       //   return null;
     }
-    
   }
 }
 
 class AppRoute {
   static const String onBoarding = '/Onboarding';
+  static const String profile = 'profile';
 }

@@ -1,0 +1,20 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
+import 'package:marketi/features/profile/domain/entity/profile_entity.dart';
+import 'package:marketi/features/profile/domain/use_case/get_profile_use_case.dart';
+import 'package:marketi/features/profile/presentation/cubit/profile_cubit/profile_state.dart';
+
+@injectable
+class ProfileCubit extends Cubit<ProfileState> {
+  final GetProfileUseCase _getProfileUseCase;
+  ProfileCubit(this._getProfileUseCase) : super(ProfileInitial());
+
+  Future<void> getProfile() async {
+    emit(ProfileLoading());
+    final result = await _getProfileUseCase.call();
+    result.fold(
+      (failure) => emit(ProfileFailure(failure.message)),
+      (userEntity) => emit(ProfileSuccess(userEntity)),
+    );
+  }
+}

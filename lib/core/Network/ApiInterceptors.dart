@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:marketi/service/flutter_secoure_storge.dart';
+import 'package:marketi/core/service/flutter_secoure_storge.dart';
 
 class AppInterceptor extends Interceptor {
   @override
@@ -11,10 +11,10 @@ class AppInterceptor extends Interceptor {
 
     final token = await SecureStorageService.instance.getToken();
 
-    if (token != null && token.isNotEmpty) {
-      options.headers['Authorization'] = 'Bearer $token';
-    }
+    options.headers['Authorization'] =
+        'Bearer 21|d3moqPLkHoZydt7KJUImYOMFne92LzoMWYaUEO75374fe026';
 
+    print(options.headers);
     handler.next(options);
   }
 
