@@ -4,6 +4,7 @@ import 'package:marketi/core/common/widget/custom_navigationbar.dart';
 import 'package:marketi/core/constants/app_rout.dart';
 import 'package:marketi/core/service/service_locator.dart';
 import 'package:marketi/core/theme/app_theme.dart';
+import 'package:marketi/features/menu/presentation/view/drower_screen.dart';
 import 'package:marketi/features/profile/presentation/cubit/theme_cubit/theme_cubit.dart';
 import 'package:marketi/features/profile/presentation/cubit/theme_cubit/theme_state.dart';
 import 'package:marketi/features/profile/presentation/views/profile_screen.dart';

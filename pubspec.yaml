@@ -45,6 +45,7 @@ dependencies:
   injectable_generator: ^3.1.0
   bloc: ^9.2.1
   dartz: ^0.10.1
+  fluttertoast: ^9.1.0
 
 dev_dependencies:
   flutter_test:

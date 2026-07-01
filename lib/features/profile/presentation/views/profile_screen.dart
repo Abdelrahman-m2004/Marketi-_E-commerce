@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marketi/core/common/widget/custom_appbar.dart';
 import 'package:marketi/core/fonts/AppFonts.dart';
 import 'package:marketi/core/service/service_locator.dart';
+import 'package:marketi/features/menu/presentation/view/drower_screen.dart';
 import 'package:marketi/features/profile/presentation/cubit/profile_cubit/profile_cubit.dart';
 import 'package:marketi/features/profile/presentation/cubit/profile_cubit/profile_state.dart';
 import 'package:marketi/features/profile/presentation/cubit/theme_cubit/theme_cubit.dart';
@@ -21,7 +22,7 @@ class ProfileScreen extends StatelessWidget {
             return Center(child: CircularProgressIndicator());
           } else if (state is ProfileFailure) {
             print(state.message);
-            return Center(child: Text(state.message));
+            return Center(child: Text("Failed to load profile"));
           } else if (state is ProfileSuccess) {
             print("${state.userEntity.name}");
             final isDark =

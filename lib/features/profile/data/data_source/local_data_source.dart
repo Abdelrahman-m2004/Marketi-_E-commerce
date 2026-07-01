@@ -15,7 +15,7 @@ class LocalDataSourceImpl implements LocalDataSource {
 
   @override
   Future<bool> isDarkMode() async {
-    return _sharedPreferences.getBool(_themeKey) ?? false; // الافتراضي Light
+    return _sharedPreferences.getBool(_themeKey) ?? false;
   }
 
   @override
