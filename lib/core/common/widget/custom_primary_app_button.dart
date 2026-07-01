@@ -24,11 +24,11 @@ class CustomPrimaryAppButton extends StatelessWidget {
             color: Colors.blue,
             borderRadius: BorderRadius.circular(14),
           ),
-          child: const Padding(
+          child: Padding(
             padding: EdgeInsets.all(8.0),
             child: Center(
               child: Text(
-                "buttonText",
+                buttonText,
                 style: TextStyle(
                   fontSize: 18,
                   color: Colors.white,

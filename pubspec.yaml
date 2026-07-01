@@ -35,13 +35,14 @@ dependencies:
 
   flutter_bloc: ^9.1.1
 
-  dio: ^5.10.0   # خليه آخر stable بدل 5.9.0
+  dio: ^5.10.0   
 
-  google_fonts: ^6.3.3  # stable أعلى شوية
+  google_fonts: ^6.3.3  
 
   smooth_page_indicator: ^1.2.1
 
-  flutter_secure_storage: ^9.2.4  # stable version (أكثر توافقًا)
+  flutter_secure_storage: ^9.2.4 
+  carousel_slider: ^5.1.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
