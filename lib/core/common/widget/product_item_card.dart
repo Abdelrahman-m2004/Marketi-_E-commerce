@@ -141,7 +141,7 @@ class ProductItemCard extends StatelessWidget {
                     ),
                   ),
                 ),
-              ):Container(),
+              ):SizedBox.shrink(),
             ],
           ),
         ),

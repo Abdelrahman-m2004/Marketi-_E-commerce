@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:marketi/Network/ApiInterceptors.dart';
-import 'package:marketi/Network/Apiconstant.dart';
-import 'package:marketi/Network/Error_Handling.dart';
+
+import 'package:marketi/core/Network/ApiInterceptors.dart';
+import 'package:marketi/core/Network/Apiconstant.dart';
+import 'package:marketi/core/Network/Error_Handling.dart';
 
 class ApiClient {
   late final Dio dio;
