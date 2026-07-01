@@ -1,4 +1,4 @@
-import 'package:marketi/class/Categorymodel.dart';
+import 'package:marketi/features/categoryList/categoryModel/Categorymodel.dart';
 import 'package:marketi/core/Network/Api_client.dart';
 import 'package:marketi/core/Network/Apiconstant.dart';
 

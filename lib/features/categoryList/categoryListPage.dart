@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marketi/core/Fonts/AppFonts.dart';
-import 'package:marketi/core/common/categoryItemCard.dart';
+import 'package:marketi/features/categoryList/categoryItemCard.dart';
 import 'package:marketi/core/common/widget/custom_appbar.dart';
 import 'package:marketi/core/common/widget/custom_circle_avatar.dart';
-import 'package:marketi/cubit/category_cubit.dart';
+import 'package:marketi/features/categoryList/cubit/category_cubit.dart';
 
 class Categorylistpage extends StatelessWidget {
   const Categorylistpage({super.key});

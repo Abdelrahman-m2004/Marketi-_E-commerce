@@ -1,5 +1,3 @@
-import 'package:marketi/core/Network/Apiconstant.dart';
-
 class CategoryModel {
   final String image;
   final String categoryName;

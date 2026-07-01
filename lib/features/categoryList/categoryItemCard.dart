@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:marketi/class/Categorymodel.dart';
+import 'package:marketi/features/categoryList/categoryModel/Categorymodel.dart';
 
 class CategoryItemCard extends StatelessWidget {
   final CategoryModel categoryModel;

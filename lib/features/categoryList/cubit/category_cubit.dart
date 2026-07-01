@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:marketi/class/Categorymodel.dart';
-import 'package:marketi/data/repository/categoryRepository.dart';
+import 'package:marketi/features/categoryList/categoryModel/Categorymodel.dart';
+import 'package:marketi/features/categoryList/data/repository/categoryRepository.dart';
 import 'package:meta/meta.dart';
 
 part 'category_state.dart';

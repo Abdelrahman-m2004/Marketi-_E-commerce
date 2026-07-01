@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:marketi/Network/ApiInterceptors.dart';
-import 'package:marketi/Network/Apiconstant.dart';
-import 'package:marketi/Network/Error_Handling.dart';
+import 'package:marketi/core/Network/ApiInterceptors.dart';
+import 'package:marketi/core/Network/Apiconstant.dart';
+import 'package:marketi/core/Network/Error_Handling.dart';
 
 class ApiClient {
   late final Dio dio;
@@ -17,6 +17,11 @@ class ApiClient {
     try {
       return await dio.get(path, queryParameters: queryparameters);
     } on DioException catch (e) {
+      print("TYPE: ${e.type}");
+      print("😂MESSAGE: ${e.message}");
+      print("ERROR: ${e.error}");
+      print("STATUS: ${e.response?.statusCode}");
+      print("DATA: ${e.response?.data}");
       throw Exception(ApiErrorHandler.handle(e));
     }
   }

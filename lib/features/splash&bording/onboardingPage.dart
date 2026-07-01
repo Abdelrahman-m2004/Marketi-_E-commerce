@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:marketi/pages/splash&bording/page1.dart';
+import 'package:marketi/features/splash&bording/pages.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});

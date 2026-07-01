@@ -1,5 +1,5 @@
 class Apiconstant {
-  static const String baseUrl = 'http://localhost:8000/api/v1';
+  static const String baseUrl = 'https://marketi.newcinderella.online/api/v1';
 
   //Auth Endpoint
   static const String register = '/register';
@@ -13,7 +13,7 @@ class Apiconstant {
   // Home & catalog EndPoint
   static const String home = '/home';
   static const String search_product = '/search?q=headphones';
-  static const String List_category = 'categories';
+  static const String List_category = '/categories';
   static String category_products(int catigory_id) =>
       '/categories/${catigory_id}/products';
   static const String List_Brands = '/brands';

@@ -54,7 +54,7 @@ class onboardingPages extends StatelessWidget {
             buttonText: isLastPage ? 'Get Strat' : 'Next',
             onTap: () {
               if (isLastPage) {
-                Navigator.pushNamed(context, '/categoryList');
+                Navigator.pushNamed(context, '/home');
               } else {
                 controller.nextPage(
                   duration: const Duration(milliseconds: 300),
