@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:marketi/auth/login/presentation/widgets/login_text_field.dart';
 import 'package:marketi/auth/signup/presentation/widgets/signup_field_label.dart';
+import 'package:marketi/auth/verification/presentation/views/verification_view.dart';
 import 'package:marketi/core/common/widget/custom_primary_app_button.dart';
 import 'package:marketi/core/theming/icons.dart';
+import 'package:marketi/core/theming/images.dart';
 
 class ForgotPasswordEmailForm extends StatefulWidget {
   const ForgotPasswordEmailForm({super.key});
@@ -36,7 +38,16 @@ class _ForgotPasswordEmailFormState extends State<ForgotPasswordEmailForm> {
         CustomPrimaryAppButton(
           buttonText: 'Send Code',
           onTap: () {
-            // TODO: Handle send code via email
+            final email = _emailController.text.trim();
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => VerificationView(
+                  sentTo: email.isEmpty ? 'You@gmail.com' : email,
+                  imagePath: AppImages.Verification_Code_email,
+                ),
+              ),
+            );
           },
         ),
       ],

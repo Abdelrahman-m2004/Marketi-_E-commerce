@@ -6,7 +6,8 @@ import 'package:marketi/auth/signup/presentation/widgets/signup_phone_field.dart
 import 'package:marketi/core/common/widget/custom_primary_app_button.dart';
 import 'package:marketi/core/theming/colors.dart';
 import 'package:marketi/core/theming/icons.dart';
-
+import 'package:marketi/core/Network/api_service.dart';
+import 'package:marketi/core/Network/token_storage.dart';
 class SignupForm extends StatefulWidget {
   const SignupForm({super.key});
 
@@ -104,8 +105,46 @@ class _SignupFormState extends State<SignupForm> {
         const SizedBox(height: 12),
         CustomPrimaryAppButton(
           buttonText: 'Sign Up',
-          onTap: () {
-            // TODO: Handle sign up
+          onTap: () async {
+            try {
+              if (_passwordController.text !=
+                  _confirmPasswordController.text) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Passwords do not match'),
+                  ),
+                );
+                return;
+              }
+
+              final response = await ApiService().register(
+                name: _nameController.text,
+                username: _usernameController.text,
+                phone: _phoneController.text,
+                countryPhoneCode: '+966',
+                email: _emailController.text,
+                password: _passwordController.text,
+              );
+
+              final token = response['data']['token'];
+
+              await TokenStorage.saveToken(token);
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Register Success'),
+                ),
+              );
+
+              print(await TokenStorage.getToken());
+
+            } catch (e) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(e.toString()),
+                ),
+              );
+            }
           },
         ),
       ],

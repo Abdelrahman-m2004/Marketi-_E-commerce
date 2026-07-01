@@ -1,3 +1,5 @@
+import 'package:marketi/core/Network/api_service.dart';
+import 'package:marketi/core/Network/token_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:marketi/auth/forgot_password/presentation/views/forgot_password_view.dart';
 import 'package:marketi/auth/login/presentation/widgets/login_remember_row.dart';
@@ -69,8 +71,37 @@ class _LoginFormState extends State<LoginForm> {
         const SizedBox(height: 14),
         CustomPrimaryAppButton(
           buttonText: 'Log In',
-          onTap: () {
-            // TODO: Handle login
+          onTap: () async {
+            try {
+              final api = ApiService();
+
+              final result = await api.login(
+                email: _emailController.text.trim(),
+                password: _passwordController.text.trim(),
+              );
+
+              final token = result['data']['token'];
+
+              await TokenStorage.saveToken(token);
+
+              if (!mounted) return;
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Login Success'),
+                ),
+              );
+
+              print(token);
+            } catch (e) {
+              if (!mounted) return;
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(e.toString()),
+                ),
+              );
+            }
           },
         ),
       ],

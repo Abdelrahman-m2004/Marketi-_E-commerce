@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:marketi/auth/forgot_password/presentation/views/forgot_password_email_view.dart';
 import 'package:marketi/auth/signup/presentation/widgets/signup_field_label.dart';
 import 'package:marketi/auth/signup/presentation/widgets/signup_phone_field.dart';
+import 'package:marketi/auth/verification/presentation/views/verification_view.dart';
+import 'package:marketi/core/Network/api_service.dart';
 import 'package:marketi/core/Fonts/AppFonts.dart';
 import 'package:marketi/core/common/widget/custom_primary_app_button.dart';
 import 'package:marketi/core/theming/colors.dart';
+import 'package:marketi/core/theming/images.dart';
 
 class ForgotPasswordForm extends StatefulWidget {
   const ForgotPasswordForm({super.key});
@@ -32,8 +35,34 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
         const SizedBox(height: 18),
         CustomPrimaryAppButton(
           buttonText: 'Send Code',
-          onTap: () {
-            // TODO: Handle send code
+          onTap: () async {
+            try {
+              final phone = _phoneController.text.trim();
+
+              await ApiService().sendOtp(
+                phone: phone,
+              );
+
+              if (!mounted) return;
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => VerificationView(
+                    sentTo: phone,
+                    imagePath: AppImages.Verification_Code_phone,
+                  ),
+                ),
+              );
+            } catch (e) {
+              if (!mounted) return;
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(e.toString()),
+                ),
+              );
+            }
           },
         ),
         const SizedBox(height: 14),
