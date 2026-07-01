@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:marketi/core/common/widget/custom_navigationbar.dart';
 import 'package:marketi/core/constants/app_rout.dart';
-import 'package:marketi/features/splash&bording/spalshPage.dart';
 
 class MarketiECommerce extends StatelessWidget {
   final AppRouter appRouter;
