@@ -8,23 +8,27 @@ class HomeAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        CustomCircleAvatar(imagePath: imagePath ),
-
-        Text(
-          '  Hi $customerName !' ,
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 24,
-            fontWeight: FontWeight(600),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 5),
+      child: Row(
+        children: [
+          CustomCircleAvatar(imagePath: imagePath ,
           ),
-        ),
-        Spacer(
-          flex: 1,
-        ),
-        Icon(Icons.notifications_none_outlined,size: 40,)
-      ],
+      
+          Text(
+            '  Hi $customerName !' ,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 24,
+              fontWeight: FontWeight(600),
+            ),
+          ),
+          Spacer(
+            flex: 1,
+          ),
+          Icon(Icons.notifications_none_outlined,size: 40,)
+        ],
+      ),
     );
   }
 }

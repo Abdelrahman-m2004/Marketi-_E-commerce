@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'package:marketi/features/home/data/models/category_model.dart';
 
 class CategoryItemCard extends StatelessWidget {
-  // final CategoryModel categoryModel;
+  final CategoryModel categoryModel;
 
-  const CategoryItemCard({super.key, });
+  const CategoryItemCard({super.key, required this.categoryModel});
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +21,27 @@ class CategoryItemCard extends StatelessWidget {
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(12),
-            child: Image.network('https://gratisography.com/wp-content/uploads/2025/05/gratisography-moon-robot-800x525.jpg', fit: BoxFit.cover),
+            child:
+                categoryModel.image != null && categoryModel.image!.isNotEmpty
+                ? Image.network(
+                    categoryModel.image!,
+                    width: double.infinity,
+                    height: double.infinity,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Center(
+                        child: Icon(Icons.image_not_supported),
+                      );
+                    },
+                  )
+                : const Center(child: Icon(Icons.image)),
           ),
         ),
         const SizedBox(height: 8),
         Text(
-          'watch',
+          categoryModel.categoryName,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
           textAlign: TextAlign.center,
         ),

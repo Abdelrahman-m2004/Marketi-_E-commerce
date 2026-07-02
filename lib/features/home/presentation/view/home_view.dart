@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:marketi/features/home/presentation/widget/home_appbar.dart';
 import 'package:marketi/features/home/presentation/widget/home_widget_content.dart';
 
 class HomeView extends StatelessWidget {
@@ -8,6 +9,7 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+       
       body: HomeWidgetContent(),
     );
   }

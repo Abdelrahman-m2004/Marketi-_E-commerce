@@ -1,5 +1,8 @@
 class Apiconstant {
-  static const String baseUrl = 'http://localhost:8000/api/v1';
+  static const String baseUrl = 'https://marketi.newcinderella.online/api/v1/';
+
+    //imageBaseUrl
+  static const String imageBaseUrl = 'https://marketi.newcinderella.online/storage/';
 
   //Auth Endpoint
   static const String register = '/register';
@@ -73,4 +76,8 @@ class Apiconstant {
   static const String paymets_revenue = '/admin/payments/revenue';
   static const String sand_notification = '/admin/notifications';
   static const String support_tickets = '/admin/support/tickets';
+
+
+
+
 }
