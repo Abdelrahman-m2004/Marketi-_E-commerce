@@ -76,4 +76,19 @@ class ApiService {
 
     return response.data;
   }
+  Future<Map<String, dynamic>> resetPassword({
+    required String phone,
+    required String password,
+  }) async {
+    final response = await dio.post(
+      '/reset-password',
+      data: {
+        'phone': phone,
+        'password': password,
+        'password_confirmation': password,
+      },
+    );
+
+    return response.data;
+  }
 }
