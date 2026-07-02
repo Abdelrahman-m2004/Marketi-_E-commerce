@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:marketi/core/common/widget/cart_bottom_navigation_bar.dart';
+import 'package:marketi/core/common/widget/custom_navigationbar.dart';
 import 'package:marketi/core/common/widget/custom_primary_app_button.dart';
 import 'package:marketi/features/cart/presentation/widgets/cart_appbar.dart';
 import 'package:marketi/features/cart/presentation/widgets/cart_empty_content.dart';
@@ -29,7 +30,13 @@ class CartEmptyView extends StatelessWidget {
               CustomPrimaryAppButton(
                 buttonText: 'Start Shopping',
                 onTap: () {
-                  // TODO: Navigate to home/shop
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const CustomNavigationbar(),
+                    ),
+                    (route) => false,
+                  );
                 },
               ),
             ],

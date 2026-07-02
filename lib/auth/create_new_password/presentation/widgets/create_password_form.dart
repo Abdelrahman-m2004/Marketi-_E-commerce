@@ -6,7 +6,6 @@ import 'package:marketi/auth/signup/presentation/widgets/signup_field_label.dart
 import 'package:marketi/core/common/widget/custom_primary_app_button.dart';
 import 'package:marketi/core/theming/colors.dart';
 import 'package:marketi/core/theming/icons.dart';
-import 'package:marketi/core/Network/api_service.dart';
 
 class CreatePasswordForm extends StatefulWidget {
   final String phone;
@@ -51,6 +50,7 @@ class _CreatePasswordFormState extends State<CreatePasswordForm> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SignupFieldLabel(label: 'Password'),
+        const SizedBox(height: 6),
         LoginTextField(
           controller: _passwordController,
           hintText: '••••••••••••••',
@@ -60,8 +60,9 @@ class _CreatePasswordFormState extends State<CreatePasswordForm> {
             () => setState(() => _obscurePassword = !_obscurePassword),
           ),
         ),
-        //const SizedBox(height: 8),
+        const SizedBox(height: 16),
         const SignupFieldLabel(label: 'Confirm Password'),
+        const SizedBox(height: 6),
         LoginTextField(
           controller: _confirmPasswordController,
           hintText: '••••••••••••••',
@@ -71,42 +72,15 @@ class _CreatePasswordFormState extends State<CreatePasswordForm> {
             () => setState(() => _obscureConfirm = !_obscureConfirm),
           ),
         ),
-        const SizedBox(height: 18),
+        const SizedBox(height: 28),
         CustomPrimaryAppButton(
           buttonText: 'Save Password',
-            onTap: () async {
-              if (_passwordController.text !=
-                  _confirmPasswordController.text) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Passwords do not match'),
-                  ),
-                );
-                return;
-              }
-
-              try {
-                await ApiService().resetPassword(
-                  phone: widget.phone,
-                  password: _passwordController.text,
-                );
-
-                if (!mounted) return;
-
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const CongratulationsView(),
-                  ),
-                );
-              } catch (e) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(e.toString()),
-                  ),
-                );
-              }
-            }
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const CongratulationsView()),
+            );
+          },
         ),
       ],
     );
