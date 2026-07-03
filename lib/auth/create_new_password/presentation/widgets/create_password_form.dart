@@ -50,7 +50,6 @@ class _CreatePasswordFormState extends State<CreatePasswordForm> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SignupFieldLabel(label: 'Password'),
-        const SizedBox(height: 6),
         LoginTextField(
           controller: _passwordController,
           hintText: '••••••••••••••',
@@ -60,9 +59,8 @@ class _CreatePasswordFormState extends State<CreatePasswordForm> {
             () => setState(() => _obscurePassword = !_obscurePassword),
           ),
         ),
-        const SizedBox(height: 16),
+
         const SignupFieldLabel(label: 'Confirm Password'),
-        const SizedBox(height: 6),
         LoginTextField(
           controller: _confirmPasswordController,
           hintText: '••••••••••••••',

@@ -10,6 +10,7 @@ class LoginTextField extends StatelessWidget {
   final bool obscureText;
   final Widget? suffixIcon;
   final TextInputType keyboardType;
+  final String? Function(String?)? validator;
 
   const LoginTextField({
     super.key,
@@ -19,6 +20,7 @@ class LoginTextField extends StatelessWidget {
     this.obscureText = false,
     this.suffixIcon,
     this.keyboardType = TextInputType.text,
+    this.validator,
   });
 
   @override
@@ -27,6 +29,8 @@ class LoginTextField extends StatelessWidget {
       controller: controller,
       obscureText: obscureText,
       keyboardType: keyboardType,
+      validator: validator,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       style: AppFonts.bodyLarge.copyWith(color: AppColors.Dark_Blue_900),
       decoration: InputDecoration(
         hintText: hintText,
@@ -52,6 +56,15 @@ class LoginTextField extends StatelessWidget {
           borderRadius: BorderRadius.circular(14),
           borderSide: BorderSide(color: AppColors.Dark_Blue_200, width: 1.5),
         ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: BorderSide(color: AppColors.Dark_Red_100, width: 1.2),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: BorderSide(color: AppColors.Dark_Red_100, width: 1.5),
+        ),
+        errorStyle: AppFonts.fontMedium.copyWith(color: AppColors.Dark_Red_100),
       ),
     );
   }

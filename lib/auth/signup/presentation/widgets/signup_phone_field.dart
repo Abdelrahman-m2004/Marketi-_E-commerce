@@ -6,14 +6,21 @@ import 'package:marketi/core/theming/icons.dart';
 
 class SignupPhoneField extends StatelessWidget {
   final TextEditingController controller;
+  final String? Function(String?)? validator;
 
-  const SignupPhoneField({super.key, required this.controller});
+  const SignupPhoneField({
+    super.key,
+    required this.controller,
+    this.validator,
+  });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
       keyboardType: TextInputType.phone,
+      validator: validator,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       style: AppFonts.bodyLarge.copyWith(color: AppColors.Dark_Blue_900),
       decoration: InputDecoration(
         hintText: '+20 1501142409',
@@ -44,6 +51,14 @@ class SignupPhoneField extends StatelessWidget {
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
           borderSide: BorderSide(color: AppColors.Dark_Blue_200, width: 1.5),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: BorderSide(color: AppColors.Dark_Red_100, width: 1.2),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: BorderSide(color: AppColors.Dark_Red_100, width: 1.5),
         ),
       ),
     );

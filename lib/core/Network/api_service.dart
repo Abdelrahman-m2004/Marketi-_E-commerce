@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:marketi/core/Network/token_storage.dart';
 
 class ApiService {
   final Dio dio = Dio(
@@ -87,6 +88,40 @@ class ApiService {
         'password': password,
         'password_confirmation': password,
       },
+    );
+
+    return response.data;
+  }
+  Future<Map<String, dynamic>> getCart() async {
+    final token = await TokenStorage.getToken();
+
+    final response = await dio.get(
+      '/cart',
+      options: Options(
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
+      ),
+    );
+
+    return response.data;
+  }
+  Future<Map<String, dynamic>> updateCartItem({
+    required int itemId,
+    required int quantity,
+  }) async {
+    final token = await TokenStorage.getToken();
+
+    final response = await dio.put(
+      '/cart/items/$itemId',
+      data: {
+        'quantity': quantity,
+      },
+      options: Options(
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
+      ),
     );
 
     return response.data;

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:marketi/core/common/widget/cart_bottom_navigation_bar.dart';
 import 'package:marketi/core/common/widget/custom_navigationbar.dart';
 import 'package:marketi/core/common/widget/custom_primary_app_button.dart';
 import 'package:marketi/features/cart/presentation/widgets/cart_appbar.dart';
@@ -13,7 +12,6 @@ class CartEmptyView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      bottomNavigationBar: const CartBottomNavigationBar(initialIndex: 1),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
