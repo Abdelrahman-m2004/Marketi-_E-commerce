@@ -8,10 +8,12 @@ import 'package:marketi/core/theming/colors.dart';
 
 class CreateNewPasswordView extends StatelessWidget {
   final String phone;
+  final String otp;
 
   const CreateNewPasswordView({
     super.key,
     required this.phone,
+    required this.otp,
   });
 
   @override
@@ -45,6 +47,7 @@ class CreateNewPasswordView extends StatelessWidget {
 
               CreatePasswordForm(
                 phone: phone,
+                otp: otp,
               ),
 
               const SizedBox(height: 24),

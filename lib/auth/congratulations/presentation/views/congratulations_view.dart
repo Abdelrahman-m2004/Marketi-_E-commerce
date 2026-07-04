@@ -13,29 +13,33 @@ class CongratulationsView extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 16),
-              const CustomBackButton(),
-              const SizedBox(height: 24),
-              const CongratulationsIllustration(),
-              const SizedBox(height: 28),
-              const CongratulationsContent(),
-              const SizedBox(height: 32),
-              CustomPrimaryAppButton(
-                buttonText: 'Log In',
-                onTap: () {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (_) => const LoginView()),
-                    (route) => false,
-                  );
-                },
-              ),
-            ],
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 18),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 12),
+                const CustomBackButton(),
+                const SizedBox(height: 24),
+                const CongratulationsIllustration(),
+                const SizedBox(height: 28),
+                const CongratulationsContent(),
+                const SizedBox(height: 24),
+                CustomPrimaryAppButton(
+                  buttonText: 'Log In',
+                  onTap: () {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const LoginView(),
+                      ),
+                          (route) => false,
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

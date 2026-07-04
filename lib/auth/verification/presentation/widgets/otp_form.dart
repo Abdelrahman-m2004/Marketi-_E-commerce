@@ -71,6 +71,7 @@ class _OtpFormState extends State<OtpForm> {
                 MaterialPageRoute(
                   builder: (_) => CreateNewPasswordView(
                     phone: widget.phone,
+                    otp: otpCode,
                   ),
                 ),
               );

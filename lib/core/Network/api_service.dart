@@ -79,17 +79,25 @@ class ApiService {
   }
   Future<Map<String, dynamic>> resetPassword({
     required String phone,
+    required String otp,
     required String password,
   }) async {
+
+    print("PHONE SENT: $phone");
+    print("OTP SENT: $otp");
+    print("PASSWORD SENT: $password");
+
     final response = await dio.post(
       '/reset-password',
       data: {
         'phone': phone,
+        'otp': otp,
         'password': password,
         'password_confirmation': password,
       },
     );
 
+    print("RESET RESPONSE: ${response.data}");
     return response.data;
   }
   Future<Map<String, dynamic>> getCart() async {

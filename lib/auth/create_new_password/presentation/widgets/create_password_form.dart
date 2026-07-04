@@ -6,13 +6,16 @@ import 'package:marketi/auth/signup/presentation/widgets/signup_field_label.dart
 import 'package:marketi/core/common/widget/custom_primary_app_button.dart';
 import 'package:marketi/core/theming/colors.dart';
 import 'package:marketi/core/theming/icons.dart';
-
+import 'package:marketi/core/Network/api_service.dart';
+import 'package:dio/dio.dart';
 class CreatePasswordForm extends StatefulWidget {
   final String phone;
+  final String otp;
 
   const CreatePasswordForm({
     super.key,
     required this.phone,
+    required this.otp,
   });
 
   @override
@@ -24,7 +27,36 @@ class _CreatePasswordFormState extends State<CreatePasswordForm> {
   final TextEditingController _confirmPasswordController = TextEditingController();
   bool _obscurePassword = true;
   bool _obscureConfirm = true;
+  Future<void> _resetPassword() async {
+    try {
+      debugPrint('WIDGET PHONE: ${widget.phone}');
+      debugPrint('WIDGET OTP: ${widget.otp}');
 
+      final response = await ApiService().resetPassword(
+        phone: widget.phone,
+        otp: widget.otp,
+        password: _passwordController.text,
+      );
+
+      debugPrint('RESET RESPONSE: $response');
+
+      if (response['success'] == true) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => const CongratulationsView(),
+          ),
+        );
+      }
+    } catch (e) {
+      if (e is DioException) {
+        debugPrint('STATUS CODE: ${e.response?.statusCode}');
+        debugPrint('RESPONSE: ${e.response?.data}');
+      }
+
+      debugPrint('RESET PASSWORD ERROR: $e');
+    }
+  }
   @override
   void dispose() {
     _passwordController.dispose();
@@ -73,12 +105,7 @@ class _CreatePasswordFormState extends State<CreatePasswordForm> {
         const SizedBox(height: 28),
         CustomPrimaryAppButton(
           buttonText: 'Save Password',
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => const CongratulationsView()),
-            );
-          },
+          onTap: _resetPassword,
         ),
       ],
     );
