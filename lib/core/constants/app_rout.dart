@@ -5,10 +5,9 @@ class AppRouter {
     switch (settings.name) {
       // case AppRoute.onBoarding:
       //   return MaterialPageRoute(builder: (_) => const Onboarding());
-      // default:
-      //   return null;
+      default:
+        return null;
     }
-    
   }
 }
 

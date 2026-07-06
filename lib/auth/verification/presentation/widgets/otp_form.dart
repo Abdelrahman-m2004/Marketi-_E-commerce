@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:marketi/auth/create_new_password/presentation/views/create_new_password_view.dart';
 import 'package:marketi/auth/verification/presentation/widgets/otp_input_field.dart';
 import 'package:marketi/auth/verification/presentation/widgets/otp_timer.dart';
-import 'package:marketi/core/common/widget/custom_primary_app_button.dart';
 import 'package:marketi/core/Network/api_service.dart';
-import 'package:dio/dio.dart';
+import 'package:marketi/core/common/widget/custom_primary_app_button.dart';
+
 class OtpForm extends StatefulWidget {
   final String phone;
 
-  const OtpForm({
-    super.key,
-    required this.phone,
-  });
+  const OtpForm({super.key, required this.phone});
+
   @override
   State<OtpForm> createState() => _OtpFormState();
 }
@@ -20,13 +18,52 @@ class _OtpFormState extends State<OtpForm> {
   final List<TextEditingController> _controllers =
       List.generate(6, (_) => TextEditingController());
   final List<FocusNode> _focusNodes = List.generate(6, (_) => FocusNode());
-  String get otpCode => _controllers.map((c) => c.text).join();
+  bool _isLoading = false;
+
+  String get _otpCode => _controllers.map((c) => c.text).join();
 
   @override
   void dispose() {
     for (final c in _controllers) c.dispose();
     for (final f in _focusNodes) f.dispose();
     super.dispose();
+  }
+
+  Future<void> _verifyOtp() async {
+    if (_otpCode.length < 6) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter the 6 digit code')),
+      );
+      return;
+    }
+
+    setState(() => _isLoading = true);
+
+    try {
+      await ApiService().verifyOtp(
+        phone: widget.phone,
+        otp: _otpCode,
+      );
+
+      if (!mounted) return;
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => CreateNewPasswordView(
+            phone: widget.phone,
+            otp: _otpCode,
+          ),
+        ),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.toString().replaceAll('Exception: ', ''))),
+      );
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
   }
 
   @override
@@ -50,55 +87,18 @@ class _OtpFormState extends State<OtpForm> {
           ),
         ),
         const SizedBox(height: 18),
-        CustomPrimaryAppButton(
-          buttonText: 'Verify Code',
-          onTap: () async {
-            try {
-              debugPrint("PHONE: ${widget.phone}");
-              debugPrint("OTP: $otpCode");
-
-              final response = await ApiService().verifyOtp(
-                phone: widget.phone,
-                otp: otpCode,
-              );
-
-              debugPrint("VERIFY RESPONSE: $response");
-
-              if (!mounted) return;
-
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => CreateNewPasswordView(
-                    phone: widget.phone,
-                    otp: otpCode,
-                  ),
-                ),
-              );
-            } catch (e) {
-              if (e is DioException) {
-                debugPrint("STATUS CODE: ${e.response?.statusCode}");
-                debugPrint("RESPONSE: ${e.response?.data}");
-              }
-
-              debugPrint("ERROR: $e");
-
-              if (!mounted) return;
-
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(e.toString()),
-                ),
-              );
-            }
+        _isLoading
+            ? const CircularProgressIndicator()
+            : CustomPrimaryAppButton(
+                buttonText: 'Verify Code',
+                onTap: _verifyOtp,
+              ),
+        const SizedBox(height: 18),
+        OtpTimer(
+          onResend: () {
+            // TODO: Handle resend code
           },
-),
-const SizedBox(height: 18),
-OtpTimer(
-onResend: () {
-// TODO: Handle resend code
-},
-),
+        ),
       ],
     );
   }

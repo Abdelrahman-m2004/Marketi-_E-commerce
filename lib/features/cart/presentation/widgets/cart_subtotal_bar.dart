@@ -36,7 +36,7 @@ class CartSubtotalBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Suptotal ($itemCount items)',
+                'Subtotal ($itemCount items)',
                 style: AppFonts.bodyMedium.copyWith(
                   color: AppColors.Dark_Blue_900,
                   fontWeight: FontWeight.w600,

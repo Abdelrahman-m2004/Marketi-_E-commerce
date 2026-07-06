@@ -3,11 +3,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:marketi/auth/congratulations/presentation/views/congratulations_view.dart';
 import 'package:marketi/auth/login/presentation/widgets/login_text_field.dart';
 import 'package:marketi/auth/signup/presentation/widgets/signup_field_label.dart';
+import 'package:marketi/core/Network/api_service.dart';
 import 'package:marketi/core/common/widget/custom_primary_app_button.dart';
 import 'package:marketi/core/theming/colors.dart';
 import 'package:marketi/core/theming/icons.dart';
-import 'package:marketi/core/Network/api_service.dart';
-import 'package:dio/dio.dart';
+
 class CreatePasswordForm extends StatefulWidget {
   final String phone;
   final String otp;
@@ -23,40 +23,13 @@ class CreatePasswordForm extends StatefulWidget {
 }
 
 class _CreatePasswordFormState extends State<CreatePasswordForm> {
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
   bool _obscurePassword = true;
   bool _obscureConfirm = true;
-  Future<void> _resetPassword() async {
-    try {
-      debugPrint('WIDGET PHONE: ${widget.phone}');
-      debugPrint('WIDGET OTP: ${widget.otp}');
+  bool _isLoading = false;
 
-      final response = await ApiService().resetPassword(
-        phone: widget.phone,
-        otp: widget.otp,
-        password: _passwordController.text,
-      );
-
-      debugPrint('RESET RESPONSE: $response');
-
-      if (response['success'] == true) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => const CongratulationsView(),
-          ),
-        );
-      }
-    } catch (e) {
-      if (e is DioException) {
-        debugPrint('STATUS CODE: ${e.response?.statusCode}');
-        debugPrint('RESPONSE: ${e.response?.data}');
-      }
-
-      debugPrint('RESET PASSWORD ERROR: $e');
-    }
-  }
   @override
   void dispose() {
     _passwordController.dispose();
@@ -76,38 +49,89 @@ class _CreatePasswordFormState extends State<CreatePasswordForm> {
     );
   }
 
+  Future<void> _resetPassword() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    setState(() => _isLoading = true);
+
+    try {
+      final response = await ApiService().resetPassword(
+        phone: widget.phone,
+        otp: widget.otp,
+        password: _passwordController.text,
+      );
+
+      if (!mounted) return;
+
+      if (response['success'] == true) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const CongratulationsView()),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(response['message'] ?? 'Something went wrong')),
+        );
+      }
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.toString().replaceAll('Exception: ', ''))),
+      );
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SignupFieldLabel(label: 'Password'),
-        LoginTextField(
-          controller: _passwordController,
-          hintText: '••••••••••••••',
-          prefixIconPath: AppIcons.Password_Icon,
-          obscureText: _obscurePassword,
-          suffixIcon: _eyeIcon(
-            () => setState(() => _obscurePassword = !_obscurePassword),
+    return Form(
+      key: _formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SignupFieldLabel(label: 'Password'),
+          const SizedBox(height: 6),
+          LoginTextField(
+            controller: _passwordController,
+            hintText: '••••••••••••••',
+            prefixIconPath: AppIcons.Password_Icon,
+            obscureText: _obscurePassword,
+            validator: (v) {
+              if (v == null || v.isEmpty) return 'Please enter a password';
+              if (v.length < 6) return 'Password must be at least 6 characters';
+              return null;
+            },
+            suffixIcon: _eyeIcon(
+              () => setState(() => _obscurePassword = !_obscurePassword),
+            ),
           ),
-        ),
-
-        const SignupFieldLabel(label: 'Confirm Password'),
-        LoginTextField(
-          controller: _confirmPasswordController,
-          hintText: '••••••••••••••',
-          prefixIconPath: AppIcons.Password_Icon,
-          obscureText: _obscureConfirm,
-          suffixIcon: _eyeIcon(
-            () => setState(() => _obscureConfirm = !_obscureConfirm),
+          const SizedBox(height: 16),
+          const SignupFieldLabel(label: 'Confirm Password'),
+          const SizedBox(height: 6),
+          LoginTextField(
+            controller: _confirmPasswordController,
+            hintText: '••••••••••••••',
+            prefixIconPath: AppIcons.Password_Icon,
+            obscureText: _obscureConfirm,
+            validator: (v) {
+              if (v == null || v.isEmpty) return 'Please confirm your password';
+              if (v != _passwordController.text) return 'Passwords do not match';
+              return null;
+            },
+            suffixIcon: _eyeIcon(
+              () => setState(() => _obscureConfirm = !_obscureConfirm),
+            ),
           ),
-        ),
-        const SizedBox(height: 28),
-        CustomPrimaryAppButton(
-          buttonText: 'Save Password',
-          onTap: _resetPassword,
-        ),
-      ],
+          const SizedBox(height: 28),
+          _isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : CustomPrimaryAppButton(
+                  buttonText: 'Save Password',
+                  onTap: _resetPassword,
+                ),
+        ],
+      ),
     );
   }
 }

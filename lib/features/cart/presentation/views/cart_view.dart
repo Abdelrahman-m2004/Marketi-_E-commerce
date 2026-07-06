@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:marketi/core/Fonts/AppFonts.dart';
-import 'package:marketi/core/common/widget/cart_bottom_navigation_bar.dart';
 import 'package:marketi/core/theming/colors.dart';
 import 'package:marketi/features/cart/data/models/cart_item_model.dart';
 import 'package:marketi/features/cart/presentation/widgets/cart_appbar.dart';
 import 'package:marketi/features/cart/presentation/widgets/cart_item_card.dart';
 import 'package:marketi/features/cart/presentation/widgets/cart_subtotal_bar.dart';
 import 'package:marketi/features/cart/presentation/views/cart_empty_view.dart';
+import 'package:marketi/features/checkout/presentation/views/checkout_view.dart';
 import 'package:marketi/core/Network/api_service.dart';
 class CartView extends StatefulWidget {
   const CartView({super.key});
@@ -100,7 +100,7 @@ class _CartViewState extends State<CartView> {
               child: ListView.separated(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 itemCount: _items.length,
-                separatorBuilder: (_, _) => const SizedBox(height: 12),
+                separatorBuilder: (_, __) => const SizedBox(height: 12),
                 itemBuilder: (context, index) {
                   return CartItemCard(
                     item: _items[index],
@@ -114,7 +114,16 @@ class _CartViewState extends State<CartView> {
               itemCount: _totalItems,
               subtotal: _subtotal,
               onCheckout: () {
-                // TODO: Navigate to checkout
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => CheckoutView(
+                      itemCount: _totalItems,
+                      subtotal: _subtotal,
+                      deliveryFee: 10.00,
+                    ),
+                  ),
+                );
               },
             ),
           ],
