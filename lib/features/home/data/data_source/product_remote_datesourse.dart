@@ -1,11 +1,11 @@
+import 'package:marketi/core/ApiService/api_services.dart';
 import 'package:marketi/core/Network/Apiconstant.dart';
-import 'package:marketi/features/home/data/ApiService/api_services.dart';
 import 'package:marketi/features/home/data/models/product_model.dart';
 
-class ProductRepository {
+class ProductRemoteDatasource {
   final ApiServices apiServices;
 
-  ProductRepository({
+  ProductRemoteDatasource({
     required this.apiServices,
   });
 
@@ -14,7 +14,9 @@ class ProductRepository {
       endpoint: Apiconstant.List_products,
     );
 
-    return (response['data']['data'] as List)
+    final List products = response['data']['data'];
+
+    return products
         .map((e) => ProductModel.fromJson(e))
         .toList();
   }

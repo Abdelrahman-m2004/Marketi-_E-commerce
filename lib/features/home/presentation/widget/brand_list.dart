@@ -16,10 +16,10 @@ class BrandList extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         } else if (state is BrandLoaded) {
           return GridView.builder(
-                          padding: EdgeInsets.zero,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-            itemCount:  math.min(state.brands.length, 3),
+            padding: EdgeInsets.zero,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: math.min(state.brands.length, 3),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3,
               crossAxisSpacing: 10,

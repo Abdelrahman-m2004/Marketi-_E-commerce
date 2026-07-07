@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marketi/core/common/widget/product_item_card.dart';
 import 'package:marketi/features/home/presentation/cubit/product_cubit/product_cubit.dart';
+import 'package:marketi/features/home/presentation/helper/product_helper.dart';
 
 class BuildListOfBestForYou extends StatelessWidget {
   const BuildListOfBestForYou({super.key});
@@ -18,8 +19,7 @@ class BuildListOfBestForYou extends StatelessWidget {
         }
 
         if (state is ProductLoaded) {
-          final products =
-              context.read<ProductCubit>().bestProducts;
+          final products = ProductHelper.best(state.products);
 
           return SizedBox(
             height: 190,

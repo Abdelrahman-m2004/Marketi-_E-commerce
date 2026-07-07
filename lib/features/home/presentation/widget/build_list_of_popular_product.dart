@@ -18,18 +18,15 @@ class BuildListOfPopularProduct extends StatelessWidget {
         }
 
         if (state is ProductLoaded) {
-           print(state.products.length);
-          final products =
-              context.read<ProductCubit>().popularProducts;
 
           return SizedBox(
-            height: 190,
+            height: 155,
             child: ListView.builder(
-              itemCount: products.length,
+              itemCount: 6,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 return ProductItemCard(
-                  productModel: products[index],
+                  productModel: state.products[index],
                   addButton: false,
                 );
               },

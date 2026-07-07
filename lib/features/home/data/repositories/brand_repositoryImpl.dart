@@ -1,11 +1,12 @@
 import 'package:marketi/core/Network/Apiconstant.dart';
-import 'package:marketi/features/home/data/ApiService/api_services.dart';
+import 'package:marketi/core/ApiService/api_services.dart';
 import 'package:marketi/features/home/data/models/brand_model.dart';
+import 'package:marketi/features/home/domain/repositories/brand_repository.dart';
 
-class BrandRepository {
+class BrandRepositoryimpl implements BrandRepository{
   final ApiServices apiServices;
 
-  BrandRepository({
+  BrandRepositoryimpl({
     required this.apiServices,
   });
 

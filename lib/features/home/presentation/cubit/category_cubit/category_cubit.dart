@@ -1,20 +1,18 @@
 import 'package:bloc/bloc.dart';
-import 'package:marketi/features/home/data/repositories/category_repository.dart';
-import 'package:marketi/features/home/presentation/cubit/category_cubit/category_cubit_state.dart';
-
-
+import 'package:marketi/features/home/domain/usecases/category_usecase.dart';
+import 'package:marketi/features/home/presentation/cubit/category_cubit/category_state.dart';
 
 class CategoryCubit extends Cubit<CategoryState> {
-  final  CategoryRepository repository;
-  CategoryCubit(this.repository) : super(CategoryInitial());
+  final CategoryUsecase categoryUsecase;
+  CategoryCubit(this.categoryUsecase) : super(CategoryInitial());
 
-  Future<void> GetCategories() async {
-    emit(categoryLoading());
+  Future<void> getCategories() async {
+    emit(CategoryLoading());
     try {
-      final categories = await repository.getCategories();
-      emit(categoryloaded(categories));
+      final categories = await categoryUsecase();
+      emit(Categoryloaded(categories));
     } catch (e) {
-      emit(categoryErorr(e.toString()));
+      emit(CategoryErorr(e.toString()));
     }
   }
 }

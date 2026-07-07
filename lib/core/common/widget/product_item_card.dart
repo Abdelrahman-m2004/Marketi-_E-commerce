@@ -29,28 +29,29 @@ class ProductItemCard extends StatelessWidget {
         ),
 
         child: Padding(
-          padding: const EdgeInsets.all(6),
+          padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 7),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               //top part
               Container(
                 height: 96,
-                width: 160,
+                width: 145,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Color(0xffD9E6FF),
                   // image: DecorationImage(image: AssetImage(imagePath)),
                 ),
                 //favorite icon
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                child: Stack(
+                   alignment: Alignment.center,
+
                   children: [
-                   Image.network(productModel.imageUrl, fit: BoxFit.cover),
+                   Image.network(productModel.imageUrl, ),
                     Align(
                       alignment: Alignment.topRight,
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(4),
                         child: Container(
                           height: 24,
                           width: 24,
@@ -77,13 +78,13 @@ class ProductItemCard extends StatelessWidget {
               ),
 
               SizedBox(
-                width: 160,
+                width: 145,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Row(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(right: 35),
+                        padding: const EdgeInsets.only(right: 25),
                         child: Text(
                           '${productModel.price} LE',
                           style: TextStyle(

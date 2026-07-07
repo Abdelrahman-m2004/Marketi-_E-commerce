@@ -3,7 +3,7 @@ import 'dart:math' as math show min;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marketi/features/home/presentation/cubit/category_cubit/category_cubit.dart';
-import 'package:marketi/features/home/presentation/cubit/category_cubit/category_cubit_state.dart';
+import 'package:marketi/features/home/presentation/cubit/category_cubit/category_state.dart';
 
 import 'package:marketi/features/home/presentation/widget/category_item_card.dart';
 
@@ -14,9 +14,9 @@ class CategoryList extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CategoryCubit, CategoryState>(
       builder: (context, state) {
-        if (state is categoryLoading) {
+        if (state is CategoryLoading) {
           return const Center(child: CircularProgressIndicator());
-        } else if (state is categoryloaded) {
+        } else if (state is Categoryloaded) {
           return SizedBox(
             height: 300,
             child: GridView.builder(
@@ -36,7 +36,7 @@ class CategoryList extends StatelessWidget {
             ),
           );
         }
-        if (state is categoryErorr) {
+        if (state is CategoryErorr) {
           return Center(child: Text(state.massage));
         }
 

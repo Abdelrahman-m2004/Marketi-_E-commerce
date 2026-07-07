@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:marketi/core/Network/Apiconstant.dart';
 
+
 // class ApiServices {
 //   late Dio dio;
 
@@ -11,8 +12,6 @@ import 'package:marketi/core/Network/Apiconstant.dart';
 //     );
 //     dio = Dio(options);
 //   }
-  
-
 
 //   Future<List<dynamic>> getAll() async {
 //     try {

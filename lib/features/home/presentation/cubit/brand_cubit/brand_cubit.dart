@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:marketi/features/home/data/models/brand_model.dart';
-import 'package:marketi/features/home/data/repositories/brand_repository.dart';
+import 'package:marketi/features/home/domain/repositories/brand_repository.dart';
 import 'package:meta/meta.dart';
 
 part 'brand_state.dart';

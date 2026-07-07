@@ -11,16 +11,16 @@ sealed class CategoryState {}
 
 final class CategoryInitial extends CategoryState {}
 
-final class categoryLoading extends CategoryState {}
+final class CategoryLoading extends CategoryState {}
 
-final class categoryloaded extends CategoryState {
+final class Categoryloaded extends CategoryState {
   final List<CategoryModel> categories;
 
-  categoryloaded(this.categories);
+  Categoryloaded(this.categories);
 }
 
-final class categoryErorr extends CategoryState {
+final class CategoryErorr extends CategoryState {
   final String massage;
 
-  categoryErorr(this.massage);
+  CategoryErorr(this.massage);
 }

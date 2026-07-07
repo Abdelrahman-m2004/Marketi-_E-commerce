@@ -22,9 +22,9 @@ class CategoryItemCard extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child:
-                categoryModel.image != null && categoryModel.image!.isNotEmpty
+                categoryModel.image.isNotEmpty
                 ? Image.network(
-                    categoryModel.image!,
+                    categoryModel.image,
                     width: double.infinity,
                     height: double.infinity,
                     fit: BoxFit.cover,
