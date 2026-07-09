@@ -6,6 +6,7 @@ class productFavModel extends Favproductentity {
     required super.price,
     required super.rating,
     required super.productName,
+    required super.id,
   });
 
   factory productFavModel.fromJson(Map<String, dynamic> json) {
@@ -15,6 +16,7 @@ class productFavModel extends Favproductentity {
       price: product['price'],
       rating: product['rating'],
       productName: product['name'],
+      id: product['id'],
     );
   }
 }

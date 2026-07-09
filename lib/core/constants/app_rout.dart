@@ -22,6 +22,12 @@ import 'package:marketi/features/favscreen/data/repository/favRepositoryImpl.dar
 import 'package:marketi/features/favscreen/presentation/page/productFavListPage.dart';
 import 'package:marketi/features/Onbording/Home.dart';
 import 'package:marketi/features/Splash/presentation/page/spalshPage.dart';
+import 'package:marketi/features/productDetails/data/dataSourse/productDetlRemoteDataSourse.dart';
+import 'package:marketi/features/productDetails/data/repository/productDetailsRepositoryImpl.dart';
+import 'package:marketi/features/productDetails/domain/repository/productDetailsRepository.dart';
+import 'package:marketi/features/productDetails/domain/useCase/getAllProuductDet.dart';
+import 'package:marketi/features/productDetails/presentation/cubit/product_detils_cubit.dart';
+import 'package:marketi/features/productDetails/presentation/page/productDetailsView.dart';
 
 class AppRouter {
   Route? generateRoute(RouteSettings settings) {
@@ -77,6 +83,22 @@ class AppRouter {
             child: const Productfavlistpage(),
           ),
         );
+      case AppRoute.productDetiles:
+        final int id = settings.arguments as int;
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (_) => ProductDetilsCubit(
+              Getallprouductdet(
+                repo: Productdetailsrepositoryimpl(
+                  remotData: Productdetlremotedatasourse(
+                    apiClient: ApiClient(),
+                  ),
+                ),
+              ),
+            )..getProductDetails(id),
+            child: const ProductDetailsView(),
+          ),
+        );
       default:
         return null;
     }
@@ -89,4 +111,5 @@ class AppRoute {
   static const String home = '/home';
   static const String catigoryScreen = '/category';
   static const String favScreen = '/Fav';
+  static const String productDetiles = '/productdetiles';
 }

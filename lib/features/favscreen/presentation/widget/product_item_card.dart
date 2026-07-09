@@ -115,26 +115,35 @@ class ProductItemCard extends StatelessWidget {
               addButton
                   ? Padding(
                       padding: const EdgeInsets.only(left: 10, top: 5),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(14),
-                          border: Border.all(
-                            color: Color(0xff3F80FF),
-                            width: 1.5,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            '/productdetiles',
+                            arguments: FavProduct.id,
+                          );
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(14),
+                            border: Border.all(
+                              color: Color(0xff3F80FF),
+                              width: 1.5,
+                            ),
                           ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 56,
-                            vertical: 3,
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Add',
-                              style: TextStyle(
-                                color: Color(0xff3F80FF),
-                                fontSize: 14,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 56,
+                              vertical: 3,
+                            ),
+                            child: Center(
+                              child: Text(
+                                'View',
+                                style: TextStyle(
+                                  color: Color(0xff3F80FF),
+                                  fontSize: 14,
+                                ),
                               ),
                             ),
                           ),
