@@ -54,6 +54,7 @@ class CheckoutAddressCard extends StatelessWidget {
                       child: Text(
                         'Change',
                         style: AppFonts.titleMedium.copyWith(
+
                           color: AppColors.Dark_Blue_200,
                           fontWeight: FontWeight.w600,
                         ),

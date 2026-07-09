@@ -4,6 +4,8 @@ import 'package:marketi/auth/congratulations/presentation/views/congratulations_
 import 'package:marketi/auth/login/presentation/widgets/login_text_field.dart';
 import 'package:marketi/auth/signup/presentation/widgets/signup_field_label.dart';
 import 'package:marketi/core/Network/api_service.dart';
+import 'package:marketi/core/Network/error_handler.dart';
+import 'package:marketi/core/common/widget/app_snackbar.dart';
 import 'package:marketi/core/common/widget/custom_primary_app_button.dart';
 import 'package:marketi/core/theming/colors.dart';
 import 'package:marketi/core/theming/icons.dart';
@@ -69,15 +71,11 @@ class _CreatePasswordFormState extends State<CreatePasswordForm> {
           MaterialPageRoute(builder: (_) => const CongratulationsView()),
         );
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(response['message'] ?? 'Something went wrong')),
-        );
+        AppSnackbar.showError(context, response['message'] ?? 'Something went wrong');
       }
     } catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.toString().replaceAll('Exception: ', ''))),
-      );
+      AppSnackbar.showError(context, ErrorHandler.parse(e));
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }

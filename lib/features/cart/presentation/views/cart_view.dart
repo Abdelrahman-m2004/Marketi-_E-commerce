@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:marketi/core/Fonts/AppFonts.dart';
+import 'package:marketi/core/Network/api_service.dart';
 import 'package:marketi/core/theming/colors.dart';
 import 'package:marketi/features/cart/data/models/cart_item_model.dart';
+import 'package:marketi/features/cart/presentation/views/cart_empty_view.dart';
 import 'package:marketi/features/cart/presentation/widgets/cart_appbar.dart';
 import 'package:marketi/features/cart/presentation/widgets/cart_item_card.dart';
 import 'package:marketi/features/cart/presentation/widgets/cart_subtotal_bar.dart';
-import 'package:marketi/features/cart/presentation/views/cart_empty_view.dart';
 import 'package:marketi/features/checkout/presentation/views/checkout_view.dart';
-import 'package:marketi/core/Network/api_service.dart';
+import 'package:marketi/features/payment/presentation/views/payments_view.dart';
+import 'package:skeletonizer/skeletonizer.dart';
+
 class CartView extends StatefulWidget {
   const CartView({super.key});
 
@@ -18,13 +21,26 @@ class CartView extends StatefulWidget {
 class _CartViewState extends State<CartView> {
   List<CartItemModel> _items = [];
   bool isLoading = true;
+
+  static final _skeletonItems = List.generate(
+    3,
+    (i) => CartItemModel(
+      itemId: i,
+      imagePath: '',
+      name: 'Product Name Here',
+      subtitle: 'Subtitle text',
+      price: 000.00,
+      rating: 0.0,
+      quantity: 1,
+    ),
+  );
+
+
   Future<void> getCart() async {
     try {
       final response = await ApiService().getCart();
-
       final cartData = response['data'];
       final items = cartData['items'] as List;
-
       setState(() {
         _items = items.map((item) {
           return CartItemModel(
@@ -37,16 +53,25 @@ class _CartViewState extends State<CartView> {
             quantity: item['quantity'],
           );
         }).toList();
-
         isLoading = false;
       });
     } catch (e) {
       debugPrint("CART ERROR: $e");
-
-      setState(() {
-        isLoading = false;
-      });
+      setState(() => isLoading = false);
     }
+  }
+
+  Future<void> _onCheckout() async {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => CheckoutView(
+          itemCount: _totalItems,
+          subtotal: _subtotal,
+          deliveryFee: 10.00,
+        ),
+      ),
+    );
   }
 
   double get _subtotal =>
@@ -58,23 +83,21 @@ class _CartViewState extends State<CartView> {
   void _deleteItem(int index) {
     setState(() => _items.removeAt(index));
   }
+
   @override
   void initState() {
     super.initState();
     getCart();
   }
+
   @override
   Widget build(BuildContext context) {
-    if (isLoading) {
-      return const Scaffold(
-        body: Center(
-          child: CircularProgressIndicator(),
-        ),
-      );
-    }
-    if (_items.isEmpty) {
+    if (!isLoading && _items.isEmpty) {
       return const CartEmptyView();
     }
+
+    final displayItems = isLoading ? _skeletonItems : _items;
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -87,44 +110,58 @@ class _CartViewState extends State<CartView> {
                 children: [
                   const CartAppbar(),
                   const SizedBox(height: 16),
-                  Text(
-                    'Products on Cart',
-                    style: AppFonts.titleLarge.copyWith(
-                      color: AppColors.Dark_Blue_900,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Products on Cart',
+                        style: AppFonts.titleLarge.copyWith(
+                          color: AppColors.Dark_Blue_900,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: isLoading ? null : () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const PaymentsView(),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          'Payment history',
+                          style: AppFonts.captionBold.copyWith(
+                            color: AppColors.Dark_Blue_200,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
             Expanded(
-              child: ListView.separated(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                itemCount: _items.length,
-                separatorBuilder: (_, __) => const SizedBox(height: 12),
-                itemBuilder: (context, index) {
-                  return CartItemCard(
-                    item: _items[index],
-                    onDelete: () => _deleteItem(index),
-                    onQuantityChanged: () => setState(() {}),
-                  );
-                },
+              child: Skeletonizer(
+                enabled: isLoading,
+                child: ListView.separated(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  itemCount: displayItems.length,
+                  separatorBuilder: (_, __) => const SizedBox(height: 12),
+                  itemBuilder: (context, index) {
+                    return CartItemCard(
+                      item: displayItems[index],
+                      onDelete: isLoading ? () {} : () => _deleteItem(index),
+                      onQuantityChanged: isLoading ? () {} : () => setState(() {}),
+                    );
+                  },
+                ),
               ),
             ),
             CartSubtotalBar(
-              itemCount: _totalItems,
-              subtotal: _subtotal,
-              onCheckout: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => CheckoutView(
-                      itemCount: _totalItems,
-                      subtotal: _subtotal,
-                      deliveryFee: 10.00,
-                    ),
-                  ),
-                );
-              },
+              itemCount: isLoading ? 0 : _totalItems,
+              subtotal: isLoading ? 0 : _subtotal,
+              onCheckout: isLoading ? null : _onCheckout,
             ),
           ],
         ),

@@ -6,13 +6,15 @@ import 'package:marketi/core/theming/colors.dart';
 class CartSubtotalBar extends StatelessWidget {
   final int itemCount;
   final double subtotal;
-  final VoidCallback onCheckout;
+  final VoidCallback? onCheckout;
+  final bool isLoading;
 
   const CartSubtotalBar({
     super.key,
     required this.itemCount,
     required this.subtotal,
     required this.onCheckout,
+    this.isLoading = false,
   });
 
   @override
@@ -52,10 +54,12 @@ class CartSubtotalBar extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 12),
-          CustomPrimaryAppButton(
-            buttonText: 'Checkout',
-            onTap: onCheckout,
-          ),
+          isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : CustomPrimaryAppButton(
+                  buttonText: 'Checkout',
+                  onTap: onCheckout,
+                ),
         ],
       ),
     );

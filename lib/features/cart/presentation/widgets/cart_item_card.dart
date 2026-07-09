@@ -83,14 +83,27 @@ class _CartItemCardState extends State<CartItemCard> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           // Product Image
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: Image.network(
-              widget.item.imagePath,
-              width: 95,
-              height: 95,
-              fit: BoxFit.cover,
-            )
+          SizedBox(
+            width: 95,
+            height: 95,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.network(
+                widget.item.imagePath,
+                width: 95,
+                height: 95,
+                fit: BoxFit.cover,
+                errorBuilder: (_, __, ___) => Container(
+                  width: 95,
+                  height: 95,
+                  decoration: BoxDecoration(
+                    color: AppColors.Light_Blue_900,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Icon(Icons.image_outlined, color: AppColors.Gray_Scale, size: 32),
+                ),
+              ),
+            ),
           ),
           const SizedBox(width: 10),
           // Content

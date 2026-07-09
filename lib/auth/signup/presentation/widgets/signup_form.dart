@@ -4,7 +4,9 @@ import 'package:marketi/auth/login/presentation/widgets/login_text_field.dart';
 import 'package:marketi/auth/signup/presentation/widgets/signup_field_label.dart';
 import 'package:marketi/auth/signup/presentation/widgets/signup_phone_field.dart';
 import 'package:marketi/core/Network/api_service.dart';
+import 'package:marketi/core/Network/error_handler.dart';
 import 'package:marketi/core/Network/token_storage.dart';
+import 'package:marketi/core/common/widget/app_snackbar.dart';
 import 'package:marketi/core/common/widget/custom_navigationbar.dart';
 import 'package:marketi/core/common/widget/custom_primary_app_button.dart';
 import 'package:marketi/core/theming/colors.dart';
@@ -97,9 +99,7 @@ class _SignupFormState extends State<SignupForm> {
       );
     } catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.toString())),
-      );
+      AppSnackbar.showError(context, ErrorHandler.parse(e));
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }

@@ -3,6 +3,8 @@ import 'package:marketi/auth/create_new_password/presentation/views/create_new_p
 import 'package:marketi/auth/verification/presentation/widgets/otp_input_field.dart';
 import 'package:marketi/auth/verification/presentation/widgets/otp_timer.dart';
 import 'package:marketi/core/Network/api_service.dart';
+import 'package:marketi/core/Network/error_handler.dart';
+import 'package:marketi/core/common/widget/app_snackbar.dart';
 import 'package:marketi/core/common/widget/custom_primary_app_button.dart';
 
 class OtpForm extends StatefulWidget {
@@ -31,9 +33,7 @@ class _OtpFormState extends State<OtpForm> {
 
   Future<void> _verifyOtp() async {
     if (_otpCode.length < 6) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter the 6 digit code')),
-      );
+      AppSnackbar.showError(context, 'Please enter the 6 digit code');
       return;
     }
 
@@ -58,9 +58,7 @@ class _OtpFormState extends State<OtpForm> {
       );
     } catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.toString().replaceAll('Exception: ', ''))),
-      );
+      AppSnackbar.showError(context, ErrorHandler.parse(e));
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
