@@ -1,30 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:marketi/core/Fonts/AppFonts.dart';
+import 'package:marketi/core/theming/colors.dart';
 
 class CustomPrimaryAppButton extends StatelessWidget {
   final String buttonText;
-  const CustomPrimaryAppButton({super.key, required this.buttonText});
+  final VoidCallback? onTap;
+
+  const CustomPrimaryAppButton({
+    super.key,
+    required this.buttonText,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
-        height: 48,
-        width: MediaQuery.of(context).size.width,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 52,
+        width: double.infinity,
         decoration: BoxDecoration(
-          color: Colors.blue,
-          borderRadius: BorderRadius.circular(14)
-          ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Center(
-            child: Text(
-              buttonText,
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.white,
-                fontWeight: FontWeight.w500,
-              ),
-              ),),
+          color: AppColors.Dark_Blue_100,
+          borderRadius: BorderRadius.circular(14),
         ),
-      );
+        child: Center(
+          child: Text(
+            buttonText,
+            style: AppFonts.buttonLarge.copyWith(color: Colors.white),
+          ),
+        ),
+      ),
+    );
   }
 }

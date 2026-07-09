@@ -1,4 +1,4 @@
-class Apiconstant {
+ class Apiconstant {
   static const String baseUrl = 'http://localhost:8000/api/v1';
 
   //Auth Endpoint
