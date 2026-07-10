@@ -6,12 +6,13 @@ class CustomAppbar extends StatelessWidget {
     required this.icon,
     this.text,
     this.shoppingcard,
-    this.customCircleAvatar,
+    this.customCircleAvatar, this.ontap,
   });
   final IconData icon;
   final String? text;
   final IconData? shoppingcard;
   final Widget? customCircleAvatar;
+  final VoidCallback? ontap;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class CustomAppbar extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
-          padding: const EdgeInsets.all(2),
+          padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: Border.all(
@@ -27,7 +28,11 @@ class CustomAppbar extends StatelessWidget {
               width: 1.5,
             ),
           ),
-          child: IconButton(onPressed: () {}, icon: Icon(icon)),
+          child: GestureDetector(
+            onTap: ontap,
+            child: Icon(icon,size: 24,),
+            
+            ),
         ),
 
         Text(

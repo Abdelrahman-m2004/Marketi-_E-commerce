@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:marketi/core/common/widget/custom_navigationbar.dart';
+import 'package:marketi/features/home/presentation/view/home_search.dart';
 import 'package:marketi/features/home/presentation/view/home_view.dart';
 
 class AppRouter {
@@ -9,6 +10,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const HomeView());
       case AppRoute.navigationbar:
         return MaterialPageRoute(builder: (_) => const CustomNavigationbar());
+      case AppRoute.search:
+        return MaterialPageRoute(builder: (_) => const HomeSearch());
       default:
         return null;
     }    
@@ -18,4 +21,5 @@ class AppRouter {
 class AppRoute {
   static const String homeview = '/homeview';
   static const String navigationbar = '/navigationbar';
+  static const String search = '/search';
 }

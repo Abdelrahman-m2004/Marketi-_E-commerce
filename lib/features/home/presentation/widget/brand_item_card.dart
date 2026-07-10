@@ -25,10 +25,19 @@ class BrandItemCard extends StatelessWidget {
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(8),
-            child: Image.network(
-              brandModel.image,
-              fit: BoxFit.cover,
-            ),
+            child: brandModel.image!.isNotEmpty
+                ? Image.network(
+                    brandModel.image!,
+                    width: double.infinity,
+                    height: double.infinity,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Center(
+                        child: Icon(Icons.image_not_supported),
+                      );
+                    },
+                  )
+                : const Center(child: Icon(Icons.image)),
           ),
         ),
       ),

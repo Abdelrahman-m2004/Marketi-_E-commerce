@@ -6,9 +6,9 @@ class ProductItemCard extends StatelessWidget {
     super.key,
 
     required this.addButton,
-    required this.productModel,
+    this.productModel,
   });
-  final ProductModel productModel;
+  final ProductModel? productModel;
   final bool addButton;
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,10 @@ class ProductItemCard extends StatelessWidget {
                    alignment: Alignment.center,
 
                   children: [
-                   Image.network(productModel.imageUrl, ),
+                    
+                  productModel?.imageUrl != null
+    ? Image.network(productModel!.imageUrl!)
+    : const Icon(Icons.image_not_supported),
                     Align(
                       alignment: Alignment.topRight,
                       child: Padding(
@@ -86,7 +89,7 @@ class ProductItemCard extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(right: 25),
                         child: Text(
-                          '${productModel.price} LE',
+                          '${productModel!.price} LE',
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
@@ -95,7 +98,7 @@ class ProductItemCard extends StatelessWidget {
                       ),
                 
                       Text(
-                        '\u{2606} ${productModel.rating} ',
+                        '\u{2606} ${productModel!.rating} ',
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
@@ -111,7 +114,7 @@ class ProductItemCard extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Text(
-                    productModel.name,
+                    productModel!.name,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
@@ -121,7 +124,7 @@ class ProductItemCard extends StatelessWidget {
 
               addButton
                   ? Padding(
-                      padding: const EdgeInsets.only(left: 10, top: 5),
+                      padding: const EdgeInsets.only(left: 5,right: 5, top: 5),
                       child: Container(
                         decoration: BoxDecoration(
                           color: Colors.white,

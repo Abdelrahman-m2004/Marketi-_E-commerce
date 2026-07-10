@@ -1,6 +1,6 @@
 class BrandModel {
-  final String image;
-  BrandModel({required this.image});
+  final String? image;
+  BrandModel({ this.image});
 
   factory BrandModel.fromJson(Map<String, dynamic> json) {
     return BrandModel(

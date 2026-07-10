@@ -5,7 +5,7 @@ class ProductModel {
   final String price;
   final String rating;
   final int ratingCount;
-  final String imageUrl;
+  final String? imageUrl;
 
   ProductModel({
 
@@ -14,7 +14,7 @@ class ProductModel {
     required this.price,
     required this.rating,
     required this.ratingCount,
-    required this.imageUrl,
+     this.imageUrl,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
