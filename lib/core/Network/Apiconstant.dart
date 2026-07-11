@@ -14,7 +14,7 @@ class Apiconstant {
   // Home & catalog EndPoint
   static const String home           = '/home';
   static const String search_product = '/search?q=headphones';
-  static const String List_category  = 'categories';
+  static const String List_category  = '/categories';
   static String category_products(int categoryId) => '/categories/$categoryId/products';
   static const String List_Brands    = '/brands';
   static const String List_products  = '/products';
@@ -24,7 +24,7 @@ class Apiconstant {
   static const String FAQs           = '/faqs';
 
   // Cart & checkout Endpoint
-  static const String view_cart  = '/cart';
+  static const String view_cart   = '/cart';
   static const String add_to_cart = '/cart/items';
   static String updata_cart_item(int itemId) => '/cart/items/$itemId';
   static const String place_order = '/orders';
@@ -63,7 +63,7 @@ class Apiconstant {
   static const String list_products   = '/admin/products';
   static const String list_orders     = '/admin/orders';
   static String Update_order_status(int orderId) => '/admin/orders/$orderId/status';
-  static const String paymets_revenue    = '/admin/payments/revenue';
-  static const String sand_notification  = '/admin/notifications';
-  static const String support_tickets    = '/admin/support/tickets';
+  static const String paymets_revenue   = '/admin/payments/revenue';
+  static const String sand_notification = '/admin/notifications';
+  static const String support_tickets   = '/admin/support/tickets';
 }

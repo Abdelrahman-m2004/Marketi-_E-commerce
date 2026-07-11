@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
-class CustomAppbar extends StatelessWidget {
+class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppbar({
     super.key,
     required this.icon,
     this.text,
     this.shoppingcard,
-    this.customCircleAvatar, this.ontap,
+    this.customCircleAvatar,
+    this.ontap,
   });
+
   final IconData icon;
   final String? text;
   final IconData? shoppingcard;
@@ -16,37 +18,45 @@ class CustomAppbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Container(
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(
-              color: Colors.black.withValues(alpha: 0.2),
-              width: 1.5,
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(2),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: Colors.black.withValues(alpha: 0.2),
+                  width: 1.5,
+                ),
+              ),
+              child: IconButton(
+                onPressed: ontap ?? () {},
+                icon: Icon(icon),
+              ),
             ),
-          ),
-          child: GestureDetector(
-            onTap: ontap,
-            child: Icon(icon,size: 24,),
-            
-            ),
-        ),
 
-        Text(
-          text ?? '',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 20,
-            fontWeight: FontWeight(600),
-          ),
+            Text(
+              text ?? '',
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+
+            shoppingcard != null
+                ? Icon(shoppingcard, color: Colors.blueAccent)
+                : (customCircleAvatar ?? const SizedBox()),
+          ],
         ),
-        shoppingcard != null
-            ? Icon(shoppingcard, color: Colors.blueAccent)
-            : customCircleAvatar ?? Container(),
-      ],
+      ),
     );
   }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(60);
 }

@@ -10,7 +10,7 @@ void main() async {
   runApp(
     MarketiECommerce(
       appRouter: AppRouter(),
-      initialRoute: AppRoute.navigationbar,
+      initialRoute: AppRoute.splach,
     ),
   );
 }
