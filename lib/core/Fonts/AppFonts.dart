@@ -54,4 +54,10 @@ abstract class AppFonts {
     fontSize: 12,
     fontWeight: FontWeight.w500,
   );
+
+  static TextStyle fontMedium = GoogleFonts.getFont(
+    _fontFamily,
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+  );
 }

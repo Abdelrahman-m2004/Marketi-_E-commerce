@@ -19,9 +19,9 @@ class AppRouter {
 }
 
 class AppRoute {
-  static const String homeview     = '/homeview';
+  static const String homeview      = '/homeview';
   static const String navigationbar = '/navigationbar';
-  static const String search       = '/search';
-  static const String onBoarding   = '/Onboarding';
-  static const String profile      = 'profile';
+  static const String search        = '/search';
+  static const String onBoarding    = '/Onboarding';
+  static const String profile       = 'profile';
 }

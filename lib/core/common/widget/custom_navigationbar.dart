@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:marketi/features/cart/presentation/views/cart_view.dart';
 import 'package:marketi/features/home/presentation/view/home_view.dart';
 
 class CustomNavigationbar extends StatefulWidget {
@@ -11,90 +12,66 @@ class CustomNavigationbar extends StatefulWidget {
 }
 
 class _CustomNavigationbarState extends State<CustomNavigationbar> {
-  int index = 0;
-  List<Widget> pages = [HomeView()];
+  int _selectedIndex = 0;
+
+  final List<Widget> _screens = [
+    const HomeView(),
+    const CartView(),
+    const Center(child: Text('Favorites Screen', style: TextStyle(fontSize: 24))),
+    const Center(child: Text('Menu Screen', style: TextStyle(fontSize: 24))),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(index: index, children: pages),
+      body: _screens[_selectedIndex],
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
           labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>((states) {
             if (states.contains(WidgetState.selected)) {
               return const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.blueAccent,
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: Colors.blue,
               );
             }
-            return const TextStyle(fontSize: 14);
+            return const TextStyle(fontSize: 12, fontWeight: FontWeight.w500);
           }),
         ),
         child: Container(
           clipBehavior: Clip.antiAlias,
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30),
-              topRight: Radius.circular(30),
+              topLeft: Radius.circular(24),
+              topRight: Radius.circular(24),
             ),
           ),
           child: NavigationBar(
             indicatorColor: Colors.transparent,
-            selectedIndex: index,
+            selectedIndex: _selectedIndex,
             onDestinationSelected: (index) =>
-                setState(() => this.index = index),
-            height: 85,
-            destinations: [
+                setState(() => _selectedIndex = index),
+            height: 72,
+            backgroundColor: Colors.white,
+            destinations: const [
               NavigationDestination(
-                icon: Icon(
-                  Icons.house_outlined,
-                  size: 32,
-                  fontWeight: FontWeight(600),
-                ),
-                selectedIcon: Icon(
-                  Icons.house_outlined,
-                  size: 32,
-                  fontWeight: FontWeight(600),
-                  color: Colors.blue,
-                ),
+                icon: Icon(Icons.home_outlined, size: 28),
+                selectedIcon: Icon(Icons.home_outlined, size: 28, color: Colors.blue),
                 label: 'Home',
               ),
               NavigationDestination(
-                icon: Icon(
-                  Icons.shopping_cart_outlined,
-                  size: 32,
-                  fontWeight: FontWeight(600),
-                ),
-                selectedIcon: Icon(
-                  Icons.shopping_cart_outlined,
-                  size: 32,
-                  fontWeight: FontWeight(600),
-                  color: Colors.blue,
-                ),
+                icon: Icon(Icons.shopping_cart_outlined, size: 28),
+                selectedIcon: Icon(Icons.shopping_cart_outlined, size: 28, color: Colors.blue),
                 label: 'Cart',
               ),
               NavigationDestination(
-                icon: Icon(
-                  Icons.favorite,
-                  size: 32,
-                  fontWeight: FontWeight(600),
-                ),
-                selectedIcon: Icon(
-                  Icons.favorite,
-                  size: 32,
-                  fontWeight: FontWeight(600),
-                  color: Colors.blue,
-                ),
-                label: 'Favorite',
+                icon: Icon(Icons.favorite_border, size: 28),
+                selectedIcon: Icon(Icons.favorite, size: 28, color: Colors.blue),
+                label: 'Favorites',
               ),
               NavigationDestination(
-                icon: Icon(Icons.menu, size: 32, fontWeight: FontWeight(600)),
-                selectedIcon: Icon(
-                  Icons.menu,
-                  size: 32,
-                  fontWeight: FontWeight(600),
-                  color: Colors.blue,
-                ),
+                icon: Icon(Icons.menu, size: 28),
+                selectedIcon: Icon(Icons.menu, size: 28, color: Colors.blue),
                 label: 'Menu',
               ),
             ],
