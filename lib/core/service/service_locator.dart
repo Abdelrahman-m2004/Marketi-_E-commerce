@@ -13,6 +13,7 @@ Future<void> configureDependencies() async => getIt.init();
 abstract class RegisterModule {
   @preResolve
   Future<SharedPreferences> get prefs => SharedPreferences.getInstance();
+
   @lazySingleton
   ApiClient get apiClient => ApiClient();
 }

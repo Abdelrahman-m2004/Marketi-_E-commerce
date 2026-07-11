@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:marketi/auth/login/presentation/views/login_view.dart';
+import 'package:marketi/core/Network/token_storage.dart';
+import 'package:marketi/core/common/widget/custom_navigationbar.dart';
 import 'package:marketi/core/constants/app_rout.dart';
 import 'package:marketi/core/service/service_locator.dart';
 import 'package:marketi/core/theme/app_theme.dart';
@@ -28,11 +31,46 @@ class MarketiECommerce extends StatelessWidget {
             themeMode: state.themeMode,
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,
-            onGenerateRoute: appRouter.generateRoute,
-            initialRoute: initialRoute,
+            home: const SplashDecider(),
           );
         },
       ),
+    );
+  }
+}
+
+class SplashDecider extends StatefulWidget {
+  const SplashDecider({super.key});
+
+  @override
+  State<SplashDecider> createState() => _SplashDeciderState();
+}
+
+class _SplashDeciderState extends State<SplashDecider> {
+  @override
+  void initState() {
+    super.initState();
+    _checkToken();
+  }
+
+  Future<void> _checkToken() async {
+    final token = await TokenStorage.getToken();
+    if (!mounted) return;
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (_) => token != null
+            ? const CustomNavigationbar()
+            : const LoginView(),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(child: CircularProgressIndicator()),
     );
   }
 }
