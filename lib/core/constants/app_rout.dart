@@ -14,12 +14,14 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const HomeSearch());
       default:
         return null;
-    }    
+    }
   }
 }
 
 class AppRoute {
-  static const String homeview = '/homeview';
+  static const String homeview     = '/homeview';
   static const String navigationbar = '/navigationbar';
-  static const String search = '/search';
+  static const String search       = '/search';
+  static const String onBoarding   = '/Onboarding';
+  static const String profile      = 'profile';
 }
