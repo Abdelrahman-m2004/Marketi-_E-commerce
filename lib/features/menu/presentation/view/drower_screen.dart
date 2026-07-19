@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:marketi/core/fonts/AppFonts.dart';
 import 'package:marketi/features/menu/presentation/view/item_drawer.dart';
+import 'package:marketi/features/orders/presentation/views/my_orders_view.dart';
+import 'package:marketi/features/payment/presentation/views/payments_view.dart';
 import 'package:marketi/features/profile/domain/entity/profile_entity.dart';
 
 class DrowerScreen extends StatelessWidget {
@@ -12,7 +14,7 @@ class DrowerScreen extends StatelessWidget {
     return Drawer(
       child: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             children: [
               Row(
@@ -20,55 +22,83 @@ class DrowerScreen extends StatelessWidget {
                 children: [
                   Image.network(
                     user.profileImage ?? '',
-                    errorBuilder: (_, __, ___) {
-                      return Image.asset(
-                        'assets/image/image.png',
-                        width: 120,
-                        height: 120,
-                        fit: BoxFit.cover,
-                      );
-                    },
+                    width: 60,
+                    height: 60,
+                    errorBuilder: (_, __, ___) => Image.asset(
+                      'assets/image/image.png',
+                      width: 60,
+                      height: 60,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         "Welcome",
                         style: AppFonts.buttonLarge.copyWith(
-                          color: Color(0xff51526C),
+                          color: const Color(0xff51526C),
                         ),
                       ),
                       Text(
                         user.name,
                         style: AppFonts.buttonLarge.copyWith(
-                          color: Color(0xff001640),
+                          color: const Color(0xff001640),
                         ),
                       ),
                     ],
                   ),
                   IconButton(
-                    onPressed: () {},
-                    icon: Icon(
+                    onPressed: () => Navigator.pop(context),
+                    icon: const Icon(
                       Icons.close_outlined,
                       color: Color(0xff001640),
-                      weight: 20,
                     ),
                   ),
                 ],
               ),
-              Divider(),
-              const SizedBox(height: 30),
-              ItemDrawer(text: "Buy Again", icon: Icons.refresh),
-              const SizedBox(height: 30),
-              ItemDrawer(text: "My Orders", icon: Icons.shopping_bag_outlined),
-              const SizedBox(height: 30),
-              ItemDrawer(text: "Payments", icon: Icons.credit_card_outlined),
-              const SizedBox(height: 30),
-              ItemDrawer(
-                text: "Account Settings",
-                icon: Icons.settings_outlined,
+              const Divider(),
+              const SizedBox(height: 20),
+              GestureDetector(
+                onTap: () {},
+                child: const ItemDrawer(
+                    text: "Buy Again", icon: Icons.refresh),
               ),
-              const SizedBox(height: 30),
-              ItemDrawer(text: "Support", icon: Icons.chat_outlined),
+              const SizedBox(height: 24),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => const MyOrdersView()),
+                  );
+                },
+                child: const ItemDrawer(
+                    text: "My Orders",
+                    icon: Icons.shopping_bag_outlined),
+              ),
+              const SizedBox(height: 24),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => const PaymentsView()),
+                  );
+                },
+                child: const ItemDrawer(
+                    text: "Payments",
+                    icon: Icons.credit_card_outlined),
+              ),
+              const SizedBox(height: 24),
+              const ItemDrawer(
+                  text: "Account Settings",
+                  icon: Icons.settings_outlined),
+              const SizedBox(height: 24),
+              const ItemDrawer(
+                  text: "Support", icon: Icons.chat_outlined),
             ],
           ),
         ),

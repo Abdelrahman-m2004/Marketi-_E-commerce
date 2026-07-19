@@ -78,7 +78,7 @@ class AppDependencies {
     );
 
     brandRepository = BrandRepositoryimpl(
-      apiServices: apiServices
+      apiServices: apiServices,
     );
 
     brandUsecase = BrandUsecase(brandRepository);

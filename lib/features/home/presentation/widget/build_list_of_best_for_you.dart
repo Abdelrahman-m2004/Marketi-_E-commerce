@@ -5,6 +5,7 @@ import 'package:marketi/features/home/presentation/cubit/product_cubit/product_c
 import 'package:marketi/features/home/presentation/helper/home_helper.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
+// addButton: true → height 190
 class BuildListOfBestForYou extends StatelessWidget {
   const BuildListOfBestForYou({super.key});
 
@@ -12,21 +13,18 @@ class BuildListOfBestForYou extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ProductCubit, ProductState>(
       builder: (context, state) {
-
-         if (state is ProductLoading) {
+        if (state is ProductLoading) {
           return Skeletonizer(
             enabled: true,
             child: SizedBox(
-              height: 160,
+              height: 190,
               child: ListView.builder(
                 itemCount: 5,
                 scrollDirection: Axis.horizontal,
-                itemBuilder: (_, index) {
-                  return ProductItemCard(
-            productModel: HomeHelper.fakeProducts[index],
-            addButton: true,
-          );
-                },
+                itemBuilder: (_, index) => ProductItemCard(
+                  productModel: HomeHelper.fakeProducts[index],
+                  addButton: true,
+                ),
               ),
             ),
           );
@@ -36,14 +34,12 @@ class BuildListOfBestForYou extends StatelessWidget {
           return SizedBox(
             height: 190,
             child: ListView.builder(
-              itemCount: 5,
+              itemCount: HomeHelper.best(state.products).length,
               scrollDirection: Axis.horizontal,
-              itemBuilder: (_, index) {
-                return ProductItemCard(
-                  productModel: HomeHelper.best(state.products)[index],
-                  addButton: true,
-                );
-              },
+              itemBuilder: (_, index) => ProductItemCard(
+                productModel: HomeHelper.best(state.products)[index],
+                addButton: true,
+              ),
             ),
           );
         }

@@ -68,7 +68,7 @@ class Onboardingpage extends StatelessWidget {
                       if (state.CurrentIndex ==
                           state.OnboardingList.length - 1) {
                         context.read<OnboardingCubit>().finishOnboarding();
-                        Navigator.pushReplacementNamed(context, '/home');
+                        Navigator.pushReplacementNamed(context, '/navigationbar');
                       } else {
                         carouselController.nextPage();
                       }

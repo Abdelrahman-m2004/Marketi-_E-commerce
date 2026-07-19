@@ -92,6 +92,43 @@ class ApiService {
     return response.data;
   }
 
+  Future<Map<String, dynamic>> addFavorite(int productId) async {
+    final token = await TokenStorage.getToken();
+    final response = await dio.post(
+      '/favorites',
+      data: {'product_id': productId},
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+    );
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> removeFavorite(int productId) async {
+    final token = await TokenStorage.getToken();
+    final response = await dio.delete(
+      '/favorites/$productId',
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+    );
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> addToCart({
+    required int productId,
+    required int quantity,
+    String? size,
+  }) async {
+    final token = await TokenStorage.getToken();
+    final response = await dio.post(
+      '/cart/items',
+      data: {
+        'product_id': productId,
+        'quantity': quantity,
+        if (size != null && size.isNotEmpty) 'size': size,
+      },
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+    );
+    return response.data;
+  }
+
   Future<Map<String, dynamic>> getCart() async {
     final token = await TokenStorage.getToken();
 

@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
-import 'package:marketi/core/error/failure.dart';
+import 'package:marketi/core/errors/failure.dart';
 import 'package:marketi/features/profile/data/data_source/local_data_source.dart';
 import 'package:marketi/features/profile/data/data_source/remote_data_source.dart';
 import 'package:marketi/features/profile/data/models/update_profile_request.dart';

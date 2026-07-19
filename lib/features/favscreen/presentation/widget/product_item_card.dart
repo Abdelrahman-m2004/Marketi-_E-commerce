@@ -81,11 +81,17 @@ class ProductItemCard extends StatelessWidget {
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.all(4),
-                        child: Image.network(
-                          FavProduct.imagePath,
-                          fit: BoxFit.contain,
-                          width: double.infinity,
-                        ),
+                        child: FavProduct.imagePath.isNotEmpty
+                            ? Image.network(
+                                FavProduct.imagePath,
+                                fit: BoxFit.contain,
+                                width: double.infinity,
+                                errorBuilder: (_, __, ___) => const Icon(
+                                  Icons.image_not_supported,
+                                  color: Colors.grey,
+                                ),
+                              )
+                            : const Icon(Icons.image, color: Colors.grey),
                       ),
                     ),
                   ],

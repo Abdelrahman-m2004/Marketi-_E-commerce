@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:marketi/features/home/data/models/category_model.dart';
 
 class CategoryItemCard extends StatelessWidget {
@@ -9,43 +8,58 @@ class CategoryItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          height: 110,
-          width: 150,
-          decoration: BoxDecoration(
-            border: Border.all(color: const Color(0xffD6E4FF)),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child:
-                categoryModel.image!.isNotEmpty
-                ? Image.network(
-                    categoryModel.image!,
-                    width: double.infinity,
-                    height: double.infinity,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return const Center(
-                        child: Icon(Icons.image_not_supported),
-                      );
-                    },
-                  )
-                : const Center(child: Icon(Icons.image)),
-          ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          categoryModel.categoryName,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-          textAlign: TextAlign.center,
-        ),
-      ],
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // Use all available height; reserve 22px for text (4 gap + 18 text)
+        final imageHeight = constraints.maxHeight - 22;
+
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Container(
+                height: imageHeight,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: const Color(0xffD6E4FF),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: const Color(0xffD6E4FF),
+                    width: 1,
+                  ),
+                ),
+                child: categoryModel.image != null &&
+                        categoryModel.image!.isNotEmpty
+                    ? Image.network(
+                        categoryModel.image!,
+                        fit: BoxFit.cover,
+                        errorBuilder: (_, __, ___) => const Center(
+                          child: Icon(Icons.image_not_supported, size: 24),
+                        ),
+                      )
+                    : const Center(child: Icon(Icons.image, size: 24)),
+              ),
+            ),
+            const SizedBox(height: 4),
+            SizedBox(
+              height: 18,
+              width: double.infinity,
+              child: Text(
+                categoryModel.categoryName,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:marketi/core/fonts/AppFonts.dart';
+import 'package:marketi/core/Fonts/AppFonts.dart';
 
 class CustomSearchText extends StatelessWidget {
   final String text;

@@ -1,4 +1,5 @@
 class Productdetailsentity {
+  final int id;
   final String image;
   final String name;
   final String descrption;
@@ -7,7 +8,8 @@ class Productdetailsentity {
   final List sizes;
   final List images;
 
-  Productdetailsentity({
+  const Productdetailsentity({
+    required this.id,
     required this.name,
     required this.descrption,
     required this.image,

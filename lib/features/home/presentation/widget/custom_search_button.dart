@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:marketi/features/home/presentation/cubit/product_cubit/product_cubit.dart';
 
 // class CustomSearchButton extends StatelessWidget {
 
@@ -70,7 +68,9 @@ class CustomSearchButton extends StatelessWidget {
     return TextField(
       controller: searchController,
       onChanged: (value) {
-        context.read<ProductCubit>().search(value);
+        if (!readOnly && onChanged != null) {
+          onChanged!(value);
+        }
       },
       readOnly: readOnly,
       onTap: ontap,

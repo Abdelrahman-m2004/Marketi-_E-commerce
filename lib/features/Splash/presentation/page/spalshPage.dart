@@ -14,7 +14,7 @@ class SplashPage extends StatelessWidget {
         }
 
         if (state is GoToHome) {
-          Navigator.pushReplacementNamed(context, '/home');
+          Navigator.pushReplacementNamed(context, '/navigationbar');
         }
       },
       child: Scaffold(

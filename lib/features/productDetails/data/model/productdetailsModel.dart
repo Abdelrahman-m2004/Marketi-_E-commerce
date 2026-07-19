@@ -3,7 +3,8 @@ import 'package:marketi/features/productDetails/data/model/productSizeModel.dart
 import 'package:marketi/features/productDetails/domain/entites/productDetailsEntity.dart';
 
 class Productdetailsmodel extends Productdetailsentity {
-  Productdetailsmodel({
+  const Productdetailsmodel({
+    required super.id,
     required super.name,
     required super.descrption,
     required super.image,
@@ -12,18 +13,20 @@ class Productdetailsmodel extends Productdetailsentity {
     required super.sizes,
     required super.images,
   });
+
   factory Productdetailsmodel.fromJson(Map<String, dynamic> json) {
     return Productdetailsmodel(
-      name: json['name'],
-      descrption: json['description'],
-      image: json['main_image_url'],
-      price: json['price'],
-      rating: json['rating'],
-      images: (json['images'] as List)
-          .map((e) => Productimagemodel.fromJson(e))
+      id: (json['id'] as num?)?.toInt() ?? 0,
+      name: (json['name'] as String?) ?? '',
+      descrption: (json['description'] as String?) ?? '',
+      image: (json['main_image_url'] as String?) ?? '',
+      price: json['price']?.toString() ?? '0',
+      rating: json['rating']?.toString() ?? '0',
+      images: (json['images'] as List? ?? [])
+          .map((e) => Productimagemodel.fromJson(e as Map<String, dynamic>))
           .toList(),
-      sizes: (json['sizes'] as List)
-          .map((e) => Productsizemodel.fromJson(e))
+      sizes: (json['sizes'] as List? ?? [])
+          .map((e) => Productsizemodel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
   }

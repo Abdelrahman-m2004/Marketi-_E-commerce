@@ -34,7 +34,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                 ),
               ),
               child: IconButton(
-                onPressed: ontap ?? () {},
+                onPressed: ontap ?? () => Navigator.of(context).maybePop(),
                 icon: Icon(icon),
               ),
             ),

@@ -21,10 +21,11 @@ import 'package:marketi/features/favscreen/presentation/cubit/fav_product_cubit.
 import 'package:marketi/features/favscreen/data/RemotDatasourse/favRemotDataSourse.dart';
 import 'package:marketi/features/favscreen/data/repository/favRepositoryImpl.dart';
 import 'package:marketi/features/favscreen/presentation/page/productFavListPage.dart';
-import 'package:marketi/features/Onbording/Home.dart';
 import 'package:marketi/features/Splash/presentation/page/spalshPage.dart';
 import 'package:marketi/features/home/presentation/view/home_search.dart';
 import 'package:marketi/features/home/presentation/view/home_view.dart';
+import 'package:marketi/features/orders/presentation/views/my_orders_view.dart';
+import 'package:marketi/features/brands/presentation/views/brands_screen.dart';
 import 'package:marketi/features/productDetails/data/dataSourse/productDetlRemoteDataSourse.dart';
 import 'package:marketi/features/productDetails/data/repository/productDetailsRepositoryImpl.dart';
 import 'package:marketi/features/productDetails/domain/useCase/getAllProuductDet.dart';
@@ -58,13 +59,17 @@ class AppRouter {
           ),
         );
       case AppRoute.home:
-        return MaterialPageRoute(builder: (_) => const Home());
+        return MaterialPageRoute(builder: (_) => const CustomNavigationbar());
       case AppRoute.navigationbar:
         return MaterialPageRoute(builder: (_) => const CustomNavigationbar());
       case AppRoute.homeview:
         return MaterialPageRoute(builder: (_) => const HomeView());
       case AppRoute.search:
         return MaterialPageRoute(builder: (_) => const HomeSearch());
+      case AppRoute.myOrders:
+        return MaterialPageRoute(builder: (_) => const MyOrdersView());
+      case AppRoute.brands:
+        return MaterialPageRoute(builder: (_) => const BrandsScreen());
       case AppRoute.catigoryScreen:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
@@ -123,5 +128,7 @@ class AppRoute {
   static const String catigoryScreen = '/category';
   static const String favScreen      = '/Fav';
   static const String productDetiles = '/productdetiles';
-  static const String profile        = 'profile';
+  static const String myOrders       = '/my-orders';
+  static const String brands         = '/brands';
+  static const String profile        = '/profile';
 }

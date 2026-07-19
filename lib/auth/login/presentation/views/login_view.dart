@@ -5,6 +5,7 @@ import 'package:marketi/auth/login/presentation/widgets/login_header.dart';
 import 'package:marketi/auth/login/presentation/widgets/login_social_buttons.dart';
 import 'package:marketi/auth/signup/presentation/views/signup_view.dart';
 import 'package:marketi/core/Fonts/AppFonts.dart';
+import 'package:marketi/core/common/widget/custom_navigationbar.dart';
 import 'package:marketi/core/theming/colors.dart';
 
 class LoginView extends StatelessWidget {
@@ -54,7 +55,11 @@ class LoginView extends StatelessWidget {
       alignment: Alignment.topLeft,
       child: GestureDetector(
         onTap: () {
-          // TODO: Navigate to home
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (_) => const CustomNavigationbar()),
+            (route) => false,
+          );
         },
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),

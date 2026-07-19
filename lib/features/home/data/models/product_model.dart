@@ -1,5 +1,5 @@
 class ProductModel {
-
+  final int id;
   final String name;
   final String description;
   final String price;
@@ -8,23 +8,23 @@ class ProductModel {
   final String? imageUrl;
 
   ProductModel({
-
+    required this.id,
     required this.name,
     required this.description,
     required this.price,
     required this.rating,
     required this.ratingCount,
-     this.imageUrl,
+    this.imageUrl,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(
-
-      name: json['name'],
-      description: json['description'],
-      price: json['price'],
-      rating: json['rating'],
-      ratingCount: json['rating_count'],
+      id: json['id'] ?? 0,
+      name: json['name'] ?? '',
+      description: json['description'] ?? '',
+      price: json['price']?.toString() ?? '0',
+      rating: json['rating']?.toString() ?? '0',
+      ratingCount: json['rating_count'] ?? 0,
       imageUrl: json['main_image_url'],
     );
   }

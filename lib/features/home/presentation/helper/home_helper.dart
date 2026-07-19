@@ -15,9 +15,11 @@ class HomeHelper {
   /// الأعلى تقييماً
   static List<ProductModel> best(List<ProductModel> products) {
     final list = List<ProductModel>.from(products);
-
-    list.sort((a, b) => b.rating.compareTo(a.rating));
-
+    list.sort((a, b) {
+      final ratingA = double.tryParse(a.rating) ?? 0.0;
+      final ratingB = double.tryParse(b.rating) ?? 0.0;
+      return ratingB.compareTo(ratingA);
+    });
     return list.take(5).toList();
   }
 
@@ -39,6 +41,7 @@ class HomeHelper {
   static final fakeProducts = List.generate(
     5,
     (_) => ProductModel(
+      id: 0,
       name: '',
       description: '',
       price: '',
