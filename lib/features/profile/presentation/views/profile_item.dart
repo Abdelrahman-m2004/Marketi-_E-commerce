@@ -20,28 +20,28 @@ class ProfileItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = context.read<ThemeCubit>().state.themeMode == ThemeMode.dark;
-    return Row(
-      children: [
-        IconButton(
-          icon: Icon(icon, color: isDark ? Colors.white : Color(0xff001640)),
-          onPressed: onTap,
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Text(
-            title,
-            style: AppFonts.titleMedium.copyWith(
-              color: isDark ? Colors.white : Color(0xff001640),
+    return GestureDetector(
+      onTap: onTap,
+      child: Row(
+        children: [
+          Icon(icon, color: isDark ? Colors.white : Color(0xff001640)),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              title,
+              style: AppFonts.titleMedium.copyWith(
+                color: isDark ? Colors.white : Color(0xff001640),
+              ),
             ),
           ),
-        ),
-        trailing ??
-            Icon(
-              Icons.arrow_forward_ios,
-              size: 16,
-              color: isDark ? Colors.white : Color(0xff001640),
-            ),
-      ],
+          trailing ??
+              Icon(
+                Icons.arrow_forward_ios,
+                size: 16,
+                color: isDark ? Colors.white : Color(0xff001640),
+              ),
+        ],
+      ),
     );
   }
 }

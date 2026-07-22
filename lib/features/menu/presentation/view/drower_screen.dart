@@ -20,15 +20,18 @@ class DrowerScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Image.network(
-                    user.profileImage ?? '',
-                    width: 60,
-                    height: 60,
-                    errorBuilder: (_, __, ___) => Image.asset(
-                      'assets/image/image.png',
-                      width: 60,
-                      height: 60,
+                  ClipOval(
+                    child: Image.network(
+                      user.profileImage ?? '',
+                      width: 48,
+                      height: 48,
                       fit: BoxFit.cover,
+                      errorBuilder: (_, __, ___) => Image.asset(
+                        'assets/image/image.png',
+                        width: 48,
+                        height: 48,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                   Column(
@@ -61,8 +64,7 @@ class DrowerScreen extends StatelessWidget {
               const SizedBox(height: 20),
               GestureDetector(
                 onTap: () {},
-                child: const ItemDrawer(
-                    text: "Buy Again", icon: Icons.refresh),
+                child: const ItemDrawer(text: "Buy Again", icon: Icons.refresh),
               ),
               const SizedBox(height: 24),
               GestureDetector(
@@ -70,13 +72,13 @@ class DrowerScreen extends StatelessWidget {
                   Navigator.pop(context);
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (_) => const MyOrdersView()),
+                    MaterialPageRoute(builder: (_) => const MyOrdersView()),
                   );
                 },
                 child: const ItemDrawer(
-                    text: "My Orders",
-                    icon: Icons.shopping_bag_outlined),
+                  text: "My Orders",
+                  icon: Icons.shopping_bag_outlined,
+                ),
               ),
               const SizedBox(height: 24),
               GestureDetector(
@@ -84,21 +86,21 @@ class DrowerScreen extends StatelessWidget {
                   Navigator.pop(context);
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (_) => const PaymentsView()),
+                    MaterialPageRoute(builder: (_) => const PaymentsView()),
                   );
                 },
                 child: const ItemDrawer(
-                    text: "Payments",
-                    icon: Icons.credit_card_outlined),
+                  text: "Payments",
+                  icon: Icons.credit_card_outlined,
+                ),
               ),
               const SizedBox(height: 24),
               const ItemDrawer(
-                  text: "Account Settings",
-                  icon: Icons.settings_outlined),
+                text: "Account Settings",
+                icon: Icons.settings_outlined,
+              ),
               const SizedBox(height: 24),
-              const ItemDrawer(
-                  text: "Support", icon: Icons.chat_outlined),
+              const ItemDrawer(text: "Support", icon: Icons.chat_outlined),
             ],
           ),
         ),

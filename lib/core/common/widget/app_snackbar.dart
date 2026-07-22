@@ -19,7 +19,7 @@ class AppSnackbar {
           style: AppFonts.bodyMedium.copyWith(color: Colors.white),
         ),
         backgroundColor: color,
-        behavior: SnackBarBehavior.floating,
+        // behavior: SnackBarBehavior.floating,
         margin: EdgeInsets.only(
           bottom: MediaQuery.of(context).size.height - 130,
           left: 16,

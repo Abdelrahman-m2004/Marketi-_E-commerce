@@ -1,8 +1,10 @@
+import 'dart:io';
+
 class UpdateProfileRequest {
   final String? name;
   final String? phone;
   final String? city;
-  final String? image;
+  final File? image;
   final String? userName;
 
   UpdateProfileRequest({
@@ -22,5 +24,21 @@ class UpdateProfileRequest {
     if (image != null) data['image'] = image;
     if (userName != null) data['username'] = userName;
     return data;
+  }
+
+  UpdateProfileRequest copyWith({
+    String? name,
+    String? phone,
+    File? image,
+    String? city,
+    String? userName,
+  }) {
+    return UpdateProfileRequest(
+      name: name ?? this.name,
+      phone: phone ?? this.phone,
+      image: image ?? this.image,
+      city: city ?? this.city,
+      userName: userName ?? this.userName,
+    );
   }
 }
