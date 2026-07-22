@@ -120,7 +120,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                             height: 250,
                             width: double.infinity,
                             fit: BoxFit.contain,
-                            errorBuilder: (_, __, ___) => const SizedBox(
+                            errorBuilder: (_, _, _) => const SizedBox(
                               height: 250,
                               child: Icon(Icons.image_not_supported, size: 80),
                             ),
@@ -153,7 +153,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                       child: Image.network(
                                         img.image_Url,
                                         fit: BoxFit.cover,
-                                        errorBuilder: (_, __, ___) =>
+                                        errorBuilder: (_, _, _) =>
                                             const Icon(
                                                 Icons.image_not_supported),
                                       ),

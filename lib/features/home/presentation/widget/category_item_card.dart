@@ -35,7 +35,7 @@ class CategoryItemCard extends StatelessWidget {
                     ? Image.network(
                         categoryModel.image!,
                         fit: BoxFit.cover,
-                        errorBuilder: (_, __, ___) => const Center(
+                        errorBuilder: (_, _, _) => const Center(
                           child: Icon(Icons.image_not_supported, size: 24),
                         ),
                       )

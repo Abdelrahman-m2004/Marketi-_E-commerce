@@ -7,6 +7,7 @@ import 'package:marketi/core/common/widget/custom_circle_avatar.dart';
 import 'package:marketi/features/categoryList/presentation/cubit/category_cubit.dart';
 
 class Categorylistpage extends StatelessWidget {
+    static const String catigoryScreen = '/category';
   const Categorylistpage({super.key});
 
   @override

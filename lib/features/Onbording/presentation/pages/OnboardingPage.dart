@@ -15,10 +15,11 @@ class Onboardingpage extends StatelessWidget {
         CarouselSliderController();
     return BlocBuilder<OnboardingCubit, OnboardingState>(
       builder: (context, state) {
-        if (state is OnboardingLoading)
+        if (state is OnboardingLoading) {
           return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
           );
+        }
         if (state is OnboardingLoaded) {
           return Scaffold(
             body: Column(

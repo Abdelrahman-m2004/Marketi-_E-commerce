@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:marketi/core/Fonts/AppFonts.dart';
-import 'package:marketi/core/Network/error_handler.dart';
 import 'package:marketi/core/common/widget/app_snackbar.dart';
 import 'package:marketi/core/common/widget/custom_back_button.dart';
 import 'package:marketi/core/common/widget/custom_primary_app_button.dart';

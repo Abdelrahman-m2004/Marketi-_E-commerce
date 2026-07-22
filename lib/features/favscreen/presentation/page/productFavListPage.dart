@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marketi/core/Fonts/AppFonts.dart';
 import 'package:marketi/core/common/widget/custom_appbar.dart';

@@ -24,7 +24,7 @@ class DrowerScreen extends StatelessWidget {
                     user.profileImage ?? '',
                     width: 60,
                     height: 60,
-                    errorBuilder: (_, __, ___) => Image.asset(
+                    errorBuilder: (_, _, _) => Image.asset(
                       'assets/image/image.png',
                       width: 60,
                       height: 60,

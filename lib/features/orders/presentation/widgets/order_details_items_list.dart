@@ -28,7 +28,7 @@ class OrderDetailsItemsList extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           ...items
-              .where((item) => item is Map)
+              .whereType<Map>()
               .map(
                 (item) => _OrderItemRow(
               item: Map<String, dynamic>.from(item as Map),
@@ -63,7 +63,7 @@ class _OrderItemRow extends StatelessWidget {
                     width: 48,
                     height: 48,
                     fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => _placeholder(),
+                    errorBuilder: (_, _, _) => _placeholder(),
                   )
                 : _placeholder(),
           ),

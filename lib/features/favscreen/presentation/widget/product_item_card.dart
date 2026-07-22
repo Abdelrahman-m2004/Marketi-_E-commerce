@@ -86,7 +86,7 @@ class ProductItemCard extends StatelessWidget {
                                 FavProduct.imagePath,
                                 fit: BoxFit.contain,
                                 width: double.infinity,
-                                errorBuilder: (_, __, ___) => const Icon(
+                                errorBuilder: (_, _, _) => const Icon(
                                   Icons.image_not_supported,
                                   color: Colors.grey,
                                 ),

@@ -93,7 +93,7 @@ class _CartItemCardState extends State<CartItemCard> {
                 width: 95,
                 height: 95,
                 fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => Container(
+                errorBuilder: (_, _, _) => Container(
                   width: 95,
                   height: 95,
                   decoration: BoxDecoration(

@@ -108,7 +108,7 @@ class _CartViewState extends State<CartView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const CartAppbar(),
+                  const CartAppbar(text: 'Cart',),
                   const SizedBox(height: 16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -147,7 +147,7 @@ class _CartViewState extends State<CartView> {
                 child: ListView.separated(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   itemCount: displayItems.length,
-                  separatorBuilder: (_, __) => const SizedBox(height: 12),
+                  separatorBuilder: (_, _) => const SizedBox(height: 12),
                   itemBuilder: (context, index) {
                     return CartItemCard(
                       item: displayItems[index],

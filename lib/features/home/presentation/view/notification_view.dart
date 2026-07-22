@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:marketi/core/common/widget/custom_navigationbar.dart';
-import 'package:marketi/core/common/widget/custom_primary_app_button.dart';
 import 'package:marketi/features/cart/presentation/widgets/cart_appbar.dart';
 import 'package:marketi/features/cart/presentation/widgets/cart_empty_content.dart';
 import 'package:marketi/features/cart/presentation/widgets/cart_empty_illustration.dart';
+import 'package:marketi/features/home/presentation/widget/notofication_emoity_content.dart';
 
-class CartEmptyView extends StatelessWidget {
-  const CartEmptyView({super.key});
+class NotificationView extends StatelessWidget {
+  const NotificationView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,24 +18,13 @@ class CartEmptyView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 16),
-              const CartAppbar(text: 'Cart',),
+              const CartAppbar(text: 'Notification',),
               const SizedBox(height: 24),
               const CartEmptyIllustration(),
               const SizedBox(height: 24),
-              const CartEmptyContent(),
+              const NotoficationEmoityContent(),
               const SizedBox(height: 32),
-              CustomPrimaryAppButton(
-                buttonText: 'Start Shopping',
-                onTap: () {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const CustomNavigationbar(),
-                    ),
-                    (route) => false,
-                  );
-                },
-              ),
+              
             ],
           ),
         ),

@@ -15,6 +15,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   Future<void> getProfile() async {
     emit(ProfileLoading());
     final result = await _getProfileUseCase.call();
+     if (isClosed) return;
     result.fold(
       (failure) => emit(ProfileFailure(failure.message)),
       (userEntity) => emit(ProfileSuccess(userEntity)),

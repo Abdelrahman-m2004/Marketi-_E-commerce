@@ -10,6 +10,7 @@ class BrandRepositoryimpl implements BrandRepository{
     required this.apiServices,
   });
 
+  @override
   Future<List<BrandModel>> getBrands() async {
     final response = await apiServices.get(
       endpoint: Apiconstant.List_Brands,

@@ -6,7 +6,8 @@ import 'package:marketi/core/theming/colors.dart';
 import 'package:marketi/core/theming/images.dart';
 
 class CartAppbar extends StatelessWidget {
-  const CartAppbar({super.key});
+  const CartAppbar({super.key, required this.text});
+  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class CartAppbar extends StatelessWidget {
       children: [
         const CustomBackButton(),
         Text(
-          'Cart',
+          text,
           style: AppFonts.headingLarge.copyWith(
             color: AppColors.Dark_Blue_900,
           ),

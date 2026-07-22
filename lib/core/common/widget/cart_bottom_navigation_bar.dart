@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:marketi/core/Fonts/AppFonts.dart';
 import 'package:marketi/core/theming/colors.dart';
 
 class CartBottomNavigationBar extends StatefulWidget {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marketi/core/Network/Api_client.dart';
 import 'package:marketi/core/common/widget/custom_navigationbar.dart';
+import 'package:marketi/core/constants/search_type_enum.dart';
 import 'package:marketi/features/Onbording/data/dataSourse/OnboardingLocalDataSourse.dart';
 import 'package:marketi/features/Onbording/data/repository/OnboardingRepoImpli.dart';
 import 'package:marketi/features/Onbording/presentation/cubit/onboarding_cubit.dart';
@@ -24,6 +25,7 @@ import 'package:marketi/features/favscreen/presentation/page/productFavListPage.
 import 'package:marketi/features/Splash/presentation/page/spalshPage.dart';
 import 'package:marketi/features/home/presentation/view/home_search.dart';
 import 'package:marketi/features/home/presentation/view/home_view.dart';
+import 'package:marketi/features/home/presentation/view/notification_view.dart';
 import 'package:marketi/features/orders/presentation/views/my_orders_view.dart';
 import 'package:marketi/features/brands/presentation/views/brands_screen.dart';
 import 'package:marketi/features/productDetails/data/dataSourse/productDetlRemoteDataSourse.dart';
@@ -31,6 +33,7 @@ import 'package:marketi/features/productDetails/data/repository/productDetailsRe
 import 'package:marketi/features/productDetails/domain/useCase/getAllProuductDet.dart';
 import 'package:marketi/features/productDetails/presentation/cubit/product_detils_cubit.dart';
 import 'package:marketi/features/productDetails/presentation/page/productDetailsView.dart';
+import 'package:marketi/features/profile/presentation/views/profile_screen.dart';
 
 class AppRouter {
   Route? generateRoute(RouteSettings settings) {
@@ -64,8 +67,13 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const CustomNavigationbar());
       case AppRoute.homeview:
         return MaterialPageRoute(builder: (_) => const HomeView());
-      case AppRoute.search:
-        return MaterialPageRoute(builder: (_) => const HomeSearch());
+     case AppRoute.search:
+  // استخراج الـ arguments الممررة (إذا لم تُمرر، نعتبرها general بشكل افتراضي)
+  final searchType = settings.arguments as SearchType? ?? SearchType.general;
+
+  return MaterialPageRoute(
+    builder: (_) => HomeSearch(searchType: searchType),
+  );
       case AppRoute.myOrders:
         return MaterialPageRoute(builder: (_) => const MyOrdersView());
       case AppRoute.brands:
@@ -112,6 +120,10 @@ class AppRouter {
             child: const ProductDetailsView(),
           ),
         );
+        case AppRoute.profile:
+        return MaterialPageRoute(builder: (_) => const ProfileScreen());
+        case AppRoute.notification:
+        return MaterialPageRoute(builder: (_) => const NotificationView());
       default:
         return null;
     }
@@ -131,4 +143,5 @@ class AppRoute {
   static const String myOrders       = '/my-orders';
   static const String brands         = '/brands';
   static const String profile        = '/profile';
+  static const String notification   = '/notification'; 
 }

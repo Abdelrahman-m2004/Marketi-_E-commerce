@@ -5,13 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:marketi/core/ApiService/api_services.dart';
 import 'package:marketi/core/constants/app_rout.dart';
-import 'package:marketi/features/home/data/data_source/brand_remote_datesource.dart';
+import 'package:marketi/core/constants/search_type_enum.dart';
 import 'package:marketi/features/home/data/data_source/category_remote_datesourse.dart';
 import 'package:marketi/features/home/data/data_source/product_remote_datesourse.dart';
 import 'package:marketi/features/home/data/repositories/brand_repositoryImpl.dart';
 import 'package:marketi/features/home/data/repositories/category_repository_impl.dart';
 import 'package:marketi/features/home/data/repositories/podust_repository_impl.dart';
-import 'package:marketi/features/home/domain/usecases/brand_usecase.dart';
 import 'package:marketi/features/home/domain/usecases/category_usecase.dart';
 import 'package:marketi/features/home/domain/usecases/product_usercase.dart';
 import 'package:marketi/features/home/presentation/cubit/brand_cubit/brand_cubit.dart';
@@ -64,9 +63,8 @@ class _HomeWidgetContentState extends State<HomeWidgetContent> {
       ),
     )..getCategories();
 
-    _brandCubit = BrandCubit(
-      BrandRepositoryimpl(apiServices: apiServices),
-    )..getBrands();
+    _brandCubit = BrandCubit(BrandRepositoryimpl(apiServices: apiServices))
+      ..getBrands();
   }
 
   @override
@@ -101,10 +99,7 @@ class _HomeWidgetContentState extends State<HomeWidgetContent> {
           child: Column(
             children: [
               const SizedBox(height: 50),
-              const HomeAppBar(
-                imagePath: 'assets/image/avatare.png',
-                customerName: 'yousef',
-              ),
+              const HomeAppBar(),
               Expanded(
                 child: ListView(
                   padding: EdgeInsets.zero,
@@ -113,42 +108,51 @@ class _HomeWidgetContentState extends State<HomeWidgetContent> {
                     const SizedBox(height: 10),
                     CustomSearchButton(
                       readOnly: true,
-                      ontap: () => Navigator.pushNamed(context, AppRoute.search),
+                      ontap: () =>
+                          Navigator.pushNamed(context, AppRoute.search),
                     ),
                     const SizedBox(height: 15),
                     const AdvertisingCard(),
                     const SizedBox(height: 10),
                     SuperTitleViewAll(
                       superTitleName: 'Popular Product',
-                      onTap: () => Navigator.pushNamed(context, AppRoute.search),
+                      onTap: () => Navigator.pushNamed(
+                        context,
+                        AppRoute.search,
+                        arguments: SearchType.popular, // مررنا نوع البحث هنا
+                      ),
                     ),
                     const SizedBox(height: 5),
                     const BuildListOfPopularProduct(),
                     const SizedBox(height: 10),
                     SuperTitleViewAll(
                       superTitleName: 'Category',
-                      onTap: () => Navigator.pushNamed(context, AppRoute.catigoryScreen),
+                      onTap: () =>
+                          Navigator.pushNamed(context, AppRoute.catigoryScreen),
                     ),
                     const CategoryList(),
                     const SizedBox(height: 7),
                     SuperTitleViewAll(
                       superTitleName: 'Best For You',
-                      onTap: () => Navigator.pushNamed(context, AppRoute.search),
+                      onTap: () =>
+                          Navigator.pushNamed(context, AppRoute.search, arguments: SearchType.best,),
                     ),
                     const BuildListOfBestForYou(),
                     const SizedBox(height: 10),
                     SuperTitleViewAll(
                       superTitleName: 'Brand',
-                      onTap: () => Navigator.pushNamed(context, AppRoute.brands),
+                      onTap: () =>
+                          Navigator.pushNamed(context, AppRoute.brands),
                     ),
                     const BrandList(),
                     const SizedBox(height: 7),
                     SuperTitleViewAll(
                       superTitleName: 'Buy Again',
-                      onTap: () => Navigator.pushNamed(context, AppRoute.search),
+                      onTap: () =>
+                          Navigator.pushNamed(context, AppRoute.search, arguments: SearchType.buyAgain),
                     ),
                     const BuildListOfBuyAgain(),
-                    const SizedBox(height: 80),
+                    const SizedBox(height: 20),
                   ],
                 ),
               ),

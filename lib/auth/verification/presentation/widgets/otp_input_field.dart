@@ -61,7 +61,7 @@ class OtpInputField extends StatelessWidget {
           const SizedBox(height: 6),
           ValueListenableBuilder<TextEditingValue>(
             valueListenable: controller,
-            builder: (_, value, __) {
+            builder: (_, value, _) {
               final hasValue = value.text.isNotEmpty;
               return Container(
                 width: 28,

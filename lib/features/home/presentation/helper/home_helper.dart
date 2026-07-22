@@ -9,7 +9,7 @@ class HomeHelper {
 
     list.sort((a, b) => b.ratingCount.compareTo(a.ratingCount));
 
-    return list.take(5).toList();
+    return list.toList();
   }
 
   /// الأعلى تقييماً
@@ -20,12 +20,12 @@ class HomeHelper {
       final ratingB = double.tryParse(b.rating) ?? 0.0;
       return ratingB.compareTo(ratingA);
     });
-    return list.take(5).toList();
+    return list.toList();
   }
 
   /// اشترِ مرة أخرى
   static List<ProductModel> buyAgain(List<ProductModel> products) {
-    return products.take(5).toList();
+    return products.toList();
   }
 
   /// البحث
