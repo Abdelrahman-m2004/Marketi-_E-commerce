@@ -5,8 +5,70 @@ import 'package:marketi/core/theming/colors.dart';
 import 'package:marketi/core/theming/icons.dart';
 import 'package:marketi/features/checkout/presentation/widgets/checkout_map_placeholder.dart';
 
-class CheckoutAddressCard extends StatelessWidget {
+class CheckoutAddressCard extends StatefulWidget {
   const CheckoutAddressCard({super.key});
+
+  @override
+  State<CheckoutAddressCard> createState() => _CheckoutAddressCardState();
+}
+
+class _CheckoutAddressCardState extends State<CheckoutAddressCard> {
+  String _address = 'Anshas, Al-sharqia, Egypt.';
+  String _phone = '+20 101 840 3043';
+
+  void _showChangeAddressDialog() {
+    final addressCtrl = TextEditingController(text: _address);
+    final phoneCtrl = TextEditingController(text: _phone);
+
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Change Address'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: addressCtrl,
+              decoration: const InputDecoration(
+                labelText: 'Delivery Address',
+                border: OutlineInputBorder(),
+              ),
+              maxLines: 2,
+            ),
+            const SizedBox(height: 12),
+            TextField(
+              controller: phoneCtrl,
+              decoration: const InputDecoration(
+                labelText: 'Mobile Number',
+                border: OutlineInputBorder(),
+              ),
+              keyboardType: TextInputType.phone,
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              setState(() {
+                _address = addressCtrl.text.trim().isNotEmpty
+                    ? addressCtrl.text.trim()
+                    : _address;
+                _phone = phoneCtrl.text.trim().isNotEmpty
+                    ? phoneCtrl.text.trim()
+                    : _phone;
+              });
+              Navigator.pop(ctx);
+            },
+            child: const Text('Save'),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +81,7 @@ class CheckoutAddressCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Map section
           const CheckoutMapPlaceholder(),
-          // Address info
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
             child: Column(
@@ -49,12 +109,17 @@ class CheckoutAddressCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () {},
+                    TextButton(
+                      onPressed: _showChangeAddressDialog,
+                      style: TextButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 4),
+                        minimumSize: const Size(48, 48),
+                        tapTargetSize: MaterialTapTargetSize.padded,
+                      ),
                       child: Text(
                         'Change',
                         style: AppFonts.titleMedium.copyWith(
-
                           color: AppColors.Dark_Blue_200,
                           fontWeight: FontWeight.w600,
                         ),
@@ -69,7 +134,7 @@ class CheckoutAddressCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Anshas, Al-sharqia, Egypt.',
+                        _address,
                         style: AppFonts.bodyMedium.copyWith(
                           color: AppColors.navy,
                           fontWeight: FontWeight.w400,
@@ -77,7 +142,7 @@ class CheckoutAddressCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        'Mobile: +20 101 840 3043',
+                        'Mobile: $_phone',
                         style: AppFonts.bodyMedium.copyWith(
                           color: AppColors.navy,
                           fontWeight: FontWeight.w400,

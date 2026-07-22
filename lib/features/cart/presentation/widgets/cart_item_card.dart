@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:marketi/core/Fonts/AppFonts.dart';
+import 'package:marketi/core/Network/api_service.dart';
+import 'package:marketi/core/Network/error_handler.dart';
+import 'package:marketi/core/common/widget/app_snackbar.dart';
 import 'package:marketi/core/theming/colors.dart';
 import 'package:marketi/core/theming/icons.dart';
 import 'package:marketi/features/cart/data/models/cart_item_model.dart';
-import 'package:marketi/core/Network/api_service.dart';
 
 
 class CartItemCard extends StatefulWidget {
@@ -26,17 +28,19 @@ class CartItemCard extends StatefulWidget {
 class _CartItemCardState extends State<CartItemCard> {
   Future<void> _increment() async {
     final newQuantity = widget.item.quantity + 1;
-
     try {
-      await ApiService().updateCartItem(
+      final response = await ApiService().updateCartItem(
         itemId: widget.item.itemId,
         quantity: newQuantity,
       );
-
       setState(() {
         widget.item.quantity = newQuantity;
+        // Update price if API returns updated price
+        final updatedPrice = response['data']?['price'];
+        if (updatedPrice != null) {
+          widget.item.price = double.tryParse(updatedPrice.toString()) ?? widget.item.price;
+        }
       });
-
       widget.onQuantityChanged();
     } catch (e) {
       debugPrint('UPDATE CART ERROR: $e');
@@ -45,27 +49,46 @@ class _CartItemCardState extends State<CartItemCard> {
 
   Future<void> _decrement() async {
     if (widget.item.quantity <= 1) return;
-
     final newQuantity = widget.item.quantity - 1;
-
     try {
-      await ApiService().updateCartItem(
+      final response = await ApiService().updateCartItem(
         itemId: widget.item.itemId,
         quantity: newQuantity,
       );
-
       setState(() {
         widget.item.quantity = newQuantity;
+        // Update price if API returns updated price
+        final updatedPrice = response['data']?['price'];
+        if (updatedPrice != null) {
+          widget.item.price = double.tryParse(updatedPrice.toString()) ?? widget.item.price;
+        }
       });
-
       widget.onQuantityChanged();
     } catch (e) {
       debugPrint('UPDATE CART ERROR: $e');
     }
   }
 
-  void _toggleFavorite() =>
+  bool _favLoading = false;
+
+  Future<void> _toggleFavorite() async {
+    if (_favLoading) return;
+    setState(() => _favLoading = true);
+    try {
+      if (widget.item.isFavorite) {
+        // product_id needed — use itemId as fallback if no productId stored
+        await ApiService().removeFavorite(widget.item.productId);
+      } else {
+        await ApiService().addFavorite(widget.item.productId);
+      }
       setState(() => widget.item.isFavorite = !widget.item.isFavorite);
+    } catch (e) {
+      if (!mounted) return;
+      AppSnackbar.showError(context, ErrorHandler.parse(e));
+    } finally {
+      if (mounted) setState(() => _favLoading = false);
+    }
+  }
 
   String _formatPrice(double price) =>
       price.toStringAsFixed(2).replaceAll('.', ',');
@@ -127,16 +150,25 @@ class _CartItemCardState extends State<CartItemCard> {
                     ),
                     const SizedBox(width: 4),
                     GestureDetector(
-                      onTap: _toggleFavorite,
-                      child: Icon(
-                        widget.item.isFavorite
-                            ? Icons.favorite
-                            : Icons.favorite_border,
-                        color: widget.item.isFavorite
-                            ? AppColors.Dark_Blue_700
-                            : AppColors.light_gray,
-                        size: 18,
-                      ),
+                      onTap: _favLoading ? null : _toggleFavorite,
+                      child: _favLoading
+                          ? const SizedBox(
+                              width: 18,
+                              height: 18,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 1.5,
+                                color: Color(0xffFF3F50),
+                              ),
+                            )
+                          : Icon(
+                              widget.item.isFavorite
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              color: widget.item.isFavorite
+                                  ? const Color(0xffFF3F50)
+                                  : AppColors.light_gray,
+                              size: 18,
+                            ),
                     ),
                   ],
                 ),

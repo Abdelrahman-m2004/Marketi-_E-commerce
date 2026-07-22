@@ -6,14 +6,24 @@ import 'package:marketi/core/theming/colors.dart';
 import 'package:marketi/core/theming/images.dart';
 
 class CartAppbar extends StatelessWidget {
-  const CartAppbar({super.key});
+  final VoidCallback? onBack;
+  const CartAppbar({super.key, this.onBack});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const CustomBackButton(),
+        CustomBackButton(
+          onTap: () {
+            if (onBack != null) {
+              // Inside NavigationBar — switch to Home tab
+              onBack!();
+            } else if (Navigator.canPop(context)) {
+              Navigator.pop(context);
+            }
+          },
+        ),
         Text(
           'Cart',
           style: AppFonts.headingLarge.copyWith(

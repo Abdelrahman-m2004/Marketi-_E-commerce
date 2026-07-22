@@ -5,6 +5,7 @@ import 'package:marketi/core/common/widget/app_snackbar.dart';
 import 'package:marketi/core/common/widget/custom_navigationbar.dart';
 import 'package:marketi/core/constants/app_rout.dart';
 import 'package:marketi/features/home/data/models/product_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductItemCard extends StatelessWidget {
   const ProductItemCard({
@@ -135,6 +136,36 @@ class _FavoriteButtonState extends State<_FavoriteButton> {
   bool _isFav = false;
   bool _loading = false;
 
+  static const String _prefsKey = 'fav_products';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadFavState();
+  }
+
+  Future<void> _loadFavState() async {
+    if (widget.productId == 0) return;
+    final prefs = await SharedPreferences.getInstance();
+    final favList = prefs.getStringList(_prefsKey) ?? [];
+    if (mounted) {
+      setState(() => _isFav = favList.contains(widget.productId.toString()));
+    }
+  }
+
+  Future<void> _saveFavState(bool isFav) async {
+    final prefs = await SharedPreferences.getInstance();
+    final favList = prefs.getStringList(_prefsKey) ?? [];
+    if (isFav) {
+      if (!favList.contains(widget.productId.toString())) {
+        favList.add(widget.productId.toString());
+      }
+    } else {
+      favList.remove(widget.productId.toString());
+    }
+    await prefs.setStringList(_prefsKey, favList);
+  }
+
   Future<void> _toggle() async {
     if (_loading || widget.productId == 0) return;
     setState(() => _loading = true);
@@ -145,10 +176,12 @@ class _FavoriteButtonState extends State<_FavoriteButton> {
         await ApiService().addFavorite(widget.productId);
       }
       if (!mounted) return;
-      setState(() => _isFav = !_isFav);
+      final newFav = !_isFav;
+      setState(() => _isFav = newFav);
+      await _saveFavState(newFav);
       AppSnackbar.showSuccess(
         context,
-        _isFav ? 'Added to favorites!' : 'Removed from favorites',
+        newFav ? 'Added to favorites!' : 'Removed from favorites',
       );
     } catch (e) {
       if (!mounted) return;

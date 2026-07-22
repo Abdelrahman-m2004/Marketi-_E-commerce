@@ -13,8 +13,10 @@ class ProfileCubit extends Cubit<ProfileState> {
     : super(ProfileInitial());
 
   Future<void> getProfile() async {
+    if (isClosed) return;
     emit(ProfileLoading());
     final result = await _getProfileUseCase.call();
+    if (isClosed) return;
     result.fold(
       (failure) => emit(ProfileFailure(failure.message)),
       (userEntity) => emit(ProfileSuccess(userEntity)),
@@ -22,8 +24,10 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   Future<void> updateProfile(UpdateProfileRequest updateProfile) async {
+    if (isClosed) return;
     emit(UpdateProfileLoading());
     final result = await _updateProfileUseCase.call(updateProfile);
+    if (isClosed) return;
     result.fold(
       (failure) => emit(UpdateProfileFailure(failure.message)),
       (_) => emit(UpdateProfileSuccess()),

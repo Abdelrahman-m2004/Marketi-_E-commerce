@@ -4,15 +4,25 @@ import 'package:marketi/core/Network/token_storage.dart';
 import 'package:marketi/features/payment/data/models/payment_model.dart';
 
 class ApiService {
-  final Dio dio = Dio(
-    BaseOptions(
-      baseUrl: 'https://marketi.newcinderella.online/api/v1',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-    ),
-  );
+  // Singleton instance لضمان نفس الـ Dio session بين الـ requests
+  static final ApiService _instance = ApiService._internal();
+  factory ApiService() => _instance;
+
+  late final Dio dio;
+
+  ApiService._internal() {
+    dio = Dio(
+      BaseOptions(
+        baseUrl: 'https://marketi.newcinderella.online/api/v1',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'User-Agent': 'MarkeriApp/1.0',
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+      ),
+    );
+  }
 
   Future<Map<String, dynamic>> login({
     required String email,
@@ -59,6 +69,14 @@ class ApiService {
     return response.data;
   }
 
+  Future<Map<String, dynamic>> sendOtpByEmail({required String email}) async {
+    final response = await dio.post(
+      '/forgot-password',
+      data: {'email': email},
+    );
+    return response.data;
+  }
+
   Future<Map<String, dynamic>> verifyOtp({
     required String phone,
     required String otp,
@@ -74,10 +92,8 @@ class ApiService {
     required String phone,
     required String otp,
     required String password,
+    String? resetToken,
   }) async {
-    debugPrint('PHONE SENT: $phone');
-    debugPrint('OTP SENT: $otp');
-
     final response = await dio.post(
       '/reset-password',
       data: {
@@ -87,8 +103,6 @@ class ApiService {
         'password_confirmation': password,
       },
     );
-
-    debugPrint('RESET RESPONSE: ${response.data}');
     return response.data;
   }
 
@@ -124,6 +138,15 @@ class ApiService {
         'quantity': quantity,
         if (size != null && size.isNotEmpty) 'size': size,
       },
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+    );
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> removeCartItem(int itemId) async {
+    final token = await TokenStorage.getToken();
+    final response = await dio.delete(
+      '/cart/items/$itemId',
       options: Options(headers: {'Authorization': 'Bearer $token'}),
     );
     return response.data;

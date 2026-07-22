@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:marketi/core/Fonts/AppFonts.dart';
 import 'package:marketi/core/theming/colors.dart';
@@ -21,6 +22,10 @@ class SignupPhoneField extends StatelessWidget {
       keyboardType: TextInputType.phone,
       validator: validator,
       autovalidateMode: AutovalidateMode.onUserInteraction,
+      inputFormatters: [
+        FilteringTextInputFormatter.digitsOnly,
+        LengthLimitingTextInputFormatter(11),
+      ],
       style: AppFonts.bodyLarge.copyWith(color: AppColors.Dark_Blue_900),
       decoration: InputDecoration(
         hintText: '+20 1501142409',

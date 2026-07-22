@@ -12,7 +12,8 @@ import 'package:marketi/features/payment/presentation/views/payments_view.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class CartView extends StatefulWidget {
-  const CartView({super.key});
+  final VoidCallback? onBack;
+  const CartView({super.key, this.onBack});
 
   @override
   State<CartView> createState() => _CartViewState();
@@ -26,6 +27,7 @@ class _CartViewState extends State<CartView> {
     3,
     (i) => CartItemModel(
       itemId: i,
+      productId: 0,
       imagePath: '',
       name: 'Product Name Here',
       subtitle: 'Subtitle text',
@@ -45,6 +47,7 @@ class _CartViewState extends State<CartView> {
         _items = items.map((item) {
           return CartItemModel(
             itemId: item['id'],
+            productId: item['product']['id'] ?? 0,
             imagePath: item['product']['main_image_url'],
             name: item['product']['name'],
             subtitle: item['size'] ?? '',
@@ -81,7 +84,15 @@ class _CartViewState extends State<CartView> {
       _items.fold(0, (sum, item) => sum + item.quantity);
 
   void _deleteItem(int index) {
+    final item = _items[index];
+    // Remove from UI immediately (optimistic)
     setState(() => _items.removeAt(index));
+    // Delete from server
+    ApiService().removeCartItem(item.itemId).catchError((e) {
+      // If API fails, restore the item
+      setState(() => _items.insert(index, item));
+      debugPrint('DELETE CART ERROR: $e');
+    });
   }
 
   @override
@@ -108,7 +119,7 @@ class _CartViewState extends State<CartView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const CartAppbar(),
+                  CartAppbar(onBack: widget.onBack),
                   const SizedBox(height: 16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

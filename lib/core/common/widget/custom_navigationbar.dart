@@ -22,28 +22,32 @@ class CustomNavigationbar extends StatefulWidget {
 
 class _CustomNavigationbarState extends State<CustomNavigationbar> {
   late int _selectedIndex;
-  late final List<Widget> _screens;
 
   @override
   void initState() {
     super.initState();
     _selectedIndex = widget.initialIndex;
-    _screens = [
-      const HomeView(),
-      const CartView(),
-      BlocProvider(
-        create: (_) => FavProductCubit(
-          Getfavproduct(
-            repo: favRepositoryImpl(
-              favRemoteData: favRemoteDataSourse(apiClient: ApiClient()),
-            ),
-          ),
-        )..GetFavProducts(),
-        child: const Productfavlistpage(),
-      ),
-      const ProfileScreen(),
-    ];
   }
+
+  void _goToHome() {
+    setState(() => _selectedIndex = 0);
+  }
+
+  List<Widget> get _screens => [
+        const HomeView(),
+        CartView(onBack: _goToHome),
+        BlocProvider(
+          create: (_) => FavProductCubit(
+            Getfavproduct(
+              repo: favRepositoryImpl(
+                favRemoteData: favRemoteDataSourse(apiClient: ApiClient()),
+              ),
+            ),
+          )..GetFavProducts(),
+          child: const Productfavlistpage(),
+        ),
+        const ProfileScreen(),
+      ];
 
   @override
   Widget build(BuildContext context) {

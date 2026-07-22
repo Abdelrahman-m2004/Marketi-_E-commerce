@@ -8,6 +8,7 @@ import 'package:marketi/core/service/service_locator.dart';
 import 'package:marketi/core/theme/app_theme.dart';
 import 'package:marketi/features/profile/presentation/cubit/theme_cubit/theme_cubit.dart';
 import 'package:marketi/features/profile/presentation/cubit/theme_cubit/theme_state.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MarketiECommerce extends StatelessWidget {
   final AppRouter appRouter;
@@ -55,6 +56,15 @@ class _SplashDeciderState extends State<SplashDecider> {
   }
 
   Future<void> _checkToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    final sessionOnly = prefs.getBool('session_only') ?? false;
+
+    // If session_only, clear token on cold start (Remember Me was unchecked)
+    if (sessionOnly) {
+      await TokenStorage.clearToken();
+      await prefs.remove('session_only');
+    }
+
     final token = await TokenStorage.getToken();
     if (!mounted) return;
     Navigator.pushReplacement(

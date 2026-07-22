@@ -14,15 +14,16 @@ class ProductCubit extends Cubit<ProductState> {
   List<ProductModel> _allProducts = [];
 
   Future<void> getProducts() async {
+    if (isClosed) return;
     emit(ProductLoading());
 
     try {
       final products = await productsUseCase();
-
+      if (isClosed) return;
       _allProducts = products;
-
       emit(ProductLoaded(products));
     } catch (e) {
+      if (isClosed) return;
       emit(ProductError(e.toString()));
     }
   }
