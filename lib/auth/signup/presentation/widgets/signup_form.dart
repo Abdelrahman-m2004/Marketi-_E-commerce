@@ -117,8 +117,17 @@ class _SignupFormState extends State<SignupForm> {
             controller: _nameController,
             hintText: 'Full Name',
             prefixIconPath: AppIcons.Name_Icon,
-            validator: (v) =>
-                v == null || v.trim().isEmpty ? 'Please enter your full name' : null,
+            validator: (v) {
+              if (v == null || v.trim().isEmpty) return 'Please enter your full name';
+              if (v.trim().length < 3) return 'Name must be at least 3 characters';
+              if (RegExp(r'^[0-9]+$').hasMatch(v.trim())) {
+                return 'Name cannot be numbers only';
+              }
+              if (!RegExp(r'^[a-zA-Z\u0600-\u06FF\s]+$').hasMatch(v.trim())) {
+                return 'Name must contain letters only';
+              }
+              return null;
+            },
           ),
           const SizedBox(height: 8),
           const SignupFieldLabel(label: 'Username'),
@@ -126,15 +135,25 @@ class _SignupFormState extends State<SignupForm> {
             controller: _usernameController,
             hintText: 'Username',
             prefixIconPath: AppIcons.User_Icon,
-            validator: (v) =>
-                v == null || v.trim().isEmpty ? 'Please enter a username' : null,
+            validator: (v) {
+              if (v == null || v.trim().isEmpty) return 'Please enter a username';
+              if (v.trim().length < 3) return 'Username must be at least 3 characters';
+              if (RegExp(r'^[0-9]+$').hasMatch(v.trim())) {
+                return 'Username cannot be numbers only';
+              }
+              return null;
+            },
           ),
           const SizedBox(height: 8),
           const SignupFieldLabel(label: 'Phone Number'),
           SignupPhoneField(
             controller: _phoneController,
-            validator: (v) =>
-                v == null || v.trim().isEmpty ? 'Please enter your phone number' : null,
+            validator: (v) {
+              if (v == null || v.trim().isEmpty) return 'Please enter your phone number';
+              final digits = v.replaceAll(RegExp(r'\D'), '');
+              if (digits.length != 11) return 'Phone number must be exactly 11 digits';
+              return null;
+            },
           ),
           const SizedBox(height: 8),
           const SignupFieldLabel(label: 'Email'),
@@ -145,7 +164,12 @@ class _SignupFormState extends State<SignupForm> {
             keyboardType: TextInputType.emailAddress,
             validator: (v) {
               if (v == null || v.trim().isEmpty) return 'Please enter your email';
-              if (!v.contains('@')) return 'Please enter a valid email';
+              // Strict email regex: must have @, a domain, and a TLD (e.g. .com)
+              final emailRegex = RegExp(
+                  r'^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$');
+              if (!emailRegex.hasMatch(v.trim())) {
+                return 'Please enter a valid email (e.g. user@example.com)';
+              }
               return null;
             },
           ),
@@ -158,7 +182,13 @@ class _SignupFormState extends State<SignupForm> {
             obscureText: _obscurePassword,
             validator: (v) {
               if (v == null || v.isEmpty) return 'Please enter a password';
-              if (v.length < 6) return 'Password must be at least 6 characters';
+              if (v.length < 8) return 'Password must be at least 8 characters';
+              if (!v.contains(RegExp(r'[A-Z]'))) {
+                return 'Password must contain at least one uppercase letter';
+              }
+              if (!v.contains(RegExp(r'[0-9]'))) {
+                return 'Password must contain at least one number';
+              }
               return null;
             },
             suffixIcon: _eyeIcon(

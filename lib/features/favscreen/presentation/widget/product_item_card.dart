@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marketi/core/Fonts/AppFonts.dart';
 import 'package:marketi/features/favscreen/domain/entites/favProductEntity.dart';
+import 'package:marketi/features/favscreen/presentation/cubit/fav_product_cubit.dart';
 
 class ProductItemCard extends StatelessWidget {
   const ProductItemCard({
@@ -65,12 +67,15 @@ class ProductItemCard extends StatelessWidget {
                               child: IconButton(
                                 padding: EdgeInsets.zero,
                                 constraints: const BoxConstraints(),
-
-                                onPressed: () {},
-                                icon: Icon(
+                                onPressed: () {
+                                  context
+                                      .read<FavProductCubit>()
+                                      .removeFavorite(FavProduct.id);
+                                },
+                                icon: const Icon(
                                   Icons.favorite,
                                   size: 16,
-                                  fontWeight: FontWeight.bold,
+                                  color: Colors.red,
                                 ),
                               ),
                             ),

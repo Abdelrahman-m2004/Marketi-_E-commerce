@@ -29,9 +29,9 @@ class LoginView extends StatelessWidget {
               const LoginForm(),
               const SizedBox(height: 16),
               LoginSocialButtons(
-                onGoogleTap: () {},
-                onAppleTap: () {},
-                onFacebookTap: () {},
+                onGoogleTap: () => _showSocialComingSoon(context, 'Google'),
+                onAppleTap: () => _showSocialComingSoon(context, 'Apple'),
+                onFacebookTap: () => _showSocialComingSoon(context, 'Facebook'),
               ),
               const SizedBox(height: 12),
               LoginFooter(
@@ -46,6 +46,15 @@ class LoginView extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  static void _showSocialComingSoon(BuildContext context, String provider) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('$provider Sign In is coming soon'),
+        duration: const Duration(seconds: 2),
       ),
     );
   }

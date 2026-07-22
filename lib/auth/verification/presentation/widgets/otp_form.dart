@@ -40,19 +40,17 @@ class _OtpFormState extends State<OtpForm> {
     setState(() => _isLoading = true);
 
     try {
-      await ApiService().verifyOtp(
-        phone: widget.phone,
-        otp: _otpCode,
-      );
-
       if (!mounted) return;
 
+      // ننتقل مباشرة لشاشة الباسورد بدون verifyOtp
+      // السيرفر سيتحقق من الـ OTP في reset-password
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (_) => CreateNewPasswordView(
             phone: widget.phone,
             otp: _otpCode,
+            resetToken: '',
           ),
         ),
       );
