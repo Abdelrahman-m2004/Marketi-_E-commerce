@@ -40,10 +40,21 @@ class _OtpFormState extends State<OtpForm> {
     setState(() => _isLoading = true);
 
     try {
+      final response = await ApiService().verifyOtp(
+        phone: widget.phone,
+        otp: _otpCode,
+      );
+
       if (!mounted) return;
 
-      // ننتقل مباشرة لشاشة الباسورد بدون verifyOtp
-      // السيرفر سيتحقق من الـ OTP في reset-password
+      if (response['success'] != true) {
+        AppSnackbar.showError(
+          context,
+          response['message'] ?? 'Invalid OTP. Please try again.',
+        );
+        return;
+      }
+
       Navigator.push(
         context,
         MaterialPageRoute(

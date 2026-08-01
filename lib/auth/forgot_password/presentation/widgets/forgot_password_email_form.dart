@@ -34,9 +34,17 @@ class _ForgotPasswordEmailFormState extends State<ForgotPasswordEmailForm> {
     setState(() => _isLoading = true);
     try {
       final email = _emailController.text.trim();
-      await ApiService().sendOtpByEmail(email: email);
+      final response = await ApiService().sendOtpByEmail(email: email);
 
       if (!mounted) return;
+
+      if (response['success'] != true) {
+        AppSnackbar.showError(
+          context,
+          response['message'] ?? 'Failed to send OTP. Please try again.',
+        );
+        return;
+      }
 
       Navigator.push(
         context,
@@ -73,7 +81,7 @@ class _ForgotPasswordEmailFormState extends State<ForgotPasswordEmailForm> {
                 return 'Please enter your email';
               }
               final emailRegex = RegExp(
-                  r'^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$');
+                  r'^[a-zA-Z][a-zA-Z0-9._%+\-]*@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$');
               if (!emailRegex.hasMatch(v.trim())) {
                 return 'Please enter a valid email (e.g. user@example.com)';
               }
