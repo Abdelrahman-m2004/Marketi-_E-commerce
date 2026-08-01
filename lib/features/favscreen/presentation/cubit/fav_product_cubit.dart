@@ -13,11 +13,14 @@ class FavProductCubit extends Cubit<FavProductState> {
   FavProductCubit(this.favproduct) : super(FavProductInitial());
 
   Future<void> GetFavProducts() async {
+    if (isClosed) return;
     emit(FavProductLoading());
     try {
       final products = await favproduct();
+      if (isClosed) return;
       emit(FavProductLoaded(products));
     } catch (e) {
+      if (isClosed) return;
       emit(FavProductError(e.toString()));
     }
   }

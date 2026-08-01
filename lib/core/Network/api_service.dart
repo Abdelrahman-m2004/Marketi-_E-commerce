@@ -184,30 +184,16 @@ class ApiService {
   }) async {
     final token = await TokenStorage.getToken();
 
-    final requestData = {
-      'delivery_address': deliveryAddress,
-      'delivery_slot_id': deliverySlotId,
-      'notes': notes,
-      'payment_type': paymentType,
-    };
-
-    debugPrint('====== PLACE ORDER REQUEST ======');
-    debugPrint('URL: /orders');
-    debugPrint('TOKEN: $token');
-    debugPrint('BODY: $requestData');
-    debugPrint('=================================');
-
     final response = await dio.post(
       '/orders',
-      data: requestData,
+      data: {
+        'delivery_address': deliveryAddress,
+        'delivery_slot_id': deliverySlotId,
+        'notes': notes,
+        'payment_type': paymentType,
+      },
       options: Options(headers: {'Authorization': 'Bearer $token'}),
     );
-
-    debugPrint('====== PLACE ORDER RESPONSE ======');
-    debugPrint('STATUS: ${response.statusCode}');
-    debugPrint('DATA: ${response.data}');
-    debugPrint('==================================');
-
     return response.data;
   }
 
@@ -234,14 +220,10 @@ class ApiService {
   Future<List<PaymentModel>> getPayments() async {
     final token = await TokenStorage.getToken();
 
-    debugPrint('PAYMENT TOKEN: $token');
-
     final response = await dio.get(
       '/payments',
       options: Options(headers: {'Authorization': 'Bearer $token'}),
     );
-
-    debugPrint('PAYMENTS RESPONSE: ${response.data}');
 
     final List payments = response.data['data']['data'];
     return payments.map((p) => PaymentModel.fromJson(p)).toList();
@@ -260,21 +242,10 @@ class ApiService {
   Future<Map<String, dynamic>> retryPayment(int orderId) async {
     final token = await TokenStorage.getToken();
 
-    debugPrint('====== RETRY PAYMENT REQUEST ======');
-    debugPrint('URL: https://marketi.newcinderella.online/api/v1/orders/$orderId/payment/retry');
-    debugPrint('TOKEN: $token');
-    debugPrint('===================================');
-
     final response = await dio.post(
       '/orders/$orderId/payment/retry',
       options: Options(headers: {'Authorization': 'Bearer $token'}),
     );
-
-    debugPrint('====== RETRY PAYMENT RESPONSE ======');
-    debugPrint('STATUS: ${response.statusCode}');
-    debugPrint('DATA: ${response.data}');
-    debugPrint('====================================');
-
     return response.data;
   }
 

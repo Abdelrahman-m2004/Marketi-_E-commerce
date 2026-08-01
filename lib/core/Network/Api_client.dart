@@ -17,11 +17,6 @@ class ApiClient {
     try {
       return await dio.get(path, queryParameters: queryparameters);
     } on DioException catch (e) {
-      print("TYPE: ${e.type}");
-      print("😂MESSAGE: ${e.message}");
-      print("ERROR: ${e.error}");
-      print("STATUS: ${e.response?.statusCode}");
-      print("DATA: ${e.response?.data}");
       throw Exception(ApiErrorHandler.handle(e));
     }
   }

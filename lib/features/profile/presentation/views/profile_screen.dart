@@ -12,13 +12,32 @@ import 'package:marketi/features/profile/presentation/cubit/theme_cubit/theme_cu
 import 'package:marketi/features/profile/presentation/cubit/theme_cubit/theme_state.dart';
 import 'package:marketi/features/profile/presentation/views/profile_item.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
   @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  late final ProfileCubit _profileCubit;
+
+  @override
+  void initState() {
+    super.initState();
+    _profileCubit = getIt<ProfileCubit>()..getProfile();
+  }
+
+  @override
+  void dispose() {
+    _profileCubit.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => getIt<ProfileCubit>()..getProfile(),
+    return BlocProvider.value(
+      value: _profileCubit,
       child: BlocBuilder<ProfileCubit, ProfileState>(
         builder: (context, profileState) {
           if (profileState is ProfileLoading) {

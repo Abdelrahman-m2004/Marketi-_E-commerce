@@ -14,7 +14,6 @@ class AppInterceptor extends Interceptor {
       options.headers['Authorization'] = 'Bearer $token';
     }
 
-    print("Headers: ${options.headers}");
     handler.next(options);
   }
 
@@ -28,8 +27,6 @@ class AppInterceptor extends Interceptor {
     if (err.response?.statusCode == 401) {
       await SecureStorageService.instance.deleteToken();
     }
-    print(err.response?.statusCode);
-    print(err.response?.data);
     handler.next(err);
   }
 }
