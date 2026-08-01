@@ -9,8 +9,25 @@ part 'fav_product_state.dart';
 class FavProductCubit extends Cubit<FavProductState> {
   final Getfavproduct favproduct;
   final ApiService _apiService = ApiService();
-
+  Faventity? allData;
   FavProductCubit(this.favproduct) : super(FavProductInitial());
+
+  void search(String text) {
+    if (allData == null) return;
+    final filtered = allData!.favProducts.where((product) {
+      return product.productName.toLowerCase().contains(text.toLowerCase());
+    }).toList();
+
+    emit(
+      FavProductLoaded(
+        Faventity(
+          favProducts: filtered,
+          currentPage: allData!.currentPage,
+          totalProducts: filtered.length,
+        ),
+      ),
+    );
+  }
 
   Future<void> GetFavProducts() async {
     if (isClosed) return;
@@ -18,6 +35,7 @@ class FavProductCubit extends Cubit<FavProductState> {
     try {
       final products = await favproduct();
       if (isClosed) return;
+      allData = products;
       emit(FavProductLoaded(products));
     } catch (e) {
       if (isClosed) return;
@@ -34,13 +52,15 @@ class FavProductCubit extends Cubit<FavProductState> {
     final updatedList = currentState.FavProducts.favProducts
         .where((p) => p.id != productId)
         .toList();
-    emit(FavProductLoaded(
-      Faventity(
-        favProducts: updatedList,
-        currentPage: currentState.FavProducts.currentPage,
-        totalProducts: currentState.FavProducts.totalProducts - 1,
+    emit(
+      FavProductLoaded(
+        Faventity(
+          favProducts: updatedList,
+          currentPage: currentState.FavProducts.currentPage,
+          totalProducts: currentState.FavProducts.totalProducts - 1,
+        ),
       ),
-    ));
+    );
 
     try {
       await _apiService.removeFavorite(productId);

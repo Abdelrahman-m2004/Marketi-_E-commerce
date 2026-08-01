@@ -6,6 +6,7 @@ class CustomSearchText extends StatelessWidget {
   final String? Function(String?)? validator;
   final TextInputAction? textInputAction;
   final void Function()? onTap;
+  final Function(String)? onchange;
   final TextEditingController? controller;
 
   const CustomSearchText({
@@ -15,6 +16,7 @@ class CustomSearchText extends StatelessWidget {
     this.textInputAction,
     this.onTap,
     this.controller,
+    this.onchange,
   });
 
   @override
@@ -39,6 +41,7 @@ class CustomSearchText extends StatelessWidget {
               validator: validator,
               textInputAction: textInputAction,
               onTap: onTap,
+              onChanged: onchange,
               decoration: InputDecoration(
                 hintText: text,
                 hintStyle: AppFonts.bodyLarge.copyWith(

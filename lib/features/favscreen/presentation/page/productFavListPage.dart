@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marketi/core/Fonts/AppFonts.dart';
 import 'package:marketi/core/common/widget/custom_appbar.dart';
 import 'package:marketi/core/common/widget/custom_circle_avatar.dart';
+import 'package:marketi/core/common/widget/custom_navigationbar.dart';
+import 'package:marketi/core/common/widget/custom_search_text.dart';
 import 'package:marketi/features/favscreen/presentation/cubit/fav_product_cubit.dart';
 import 'package:marketi/features/favscreen/presentation/widget/product_item_card.dart';
 
@@ -14,7 +16,15 @@ class Productfavlistpage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppbar(
-        icon: Icons.favorite,
+        icon: Icons.arrow_back_ios,
+        ontap: () {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const CustomNavigationbar(initialIndex: 0),
+            ),
+          );
+        },
         text: 'Favorites',
         customCircleAvatar: CustomCircleAvatar(
           imagePath: 'assets/image/image.png',
@@ -33,6 +43,13 @@ class Productfavlistpage extends StatelessWidget {
                 children: [
                   SizedBox(height: MediaQuery.of(context).size.height * 0.001),
                   Text('All Products', style: AppFonts.headingLarge),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                  CustomSearchText(
+                    text: 'What are you looking for ?',
+                    onchange: (value) {
+                      context.read<FavProductCubit>().search(value);
+                    },
+                  ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                   Expanded(
                     child: GridView.builder(
