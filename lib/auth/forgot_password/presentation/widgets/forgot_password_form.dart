@@ -22,6 +22,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _phoneController = TextEditingController();
   bool _isLoading = false;
+  String _countryCode = '+20';
 
   @override
   void dispose() {
@@ -35,16 +36,19 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
     setState(() => _isLoading = true);
     try {
       final rawPhone = _phoneController.text.trim();
-      // Format: if starts with 0, replace with +20 (Egyptian format)
-      final phone = rawPhone.startsWith('0')
-          ? '+2$rawPhone'
-          : rawPhone.startsWith('+2')
-              ? rawPhone
-              : '+20$rawPhone';
+      final phone = '$_countryCode$rawPhone';
 
-      await ApiService().sendOtp(phone: phone);
+      final response = await ApiService().sendOtp(phone: phone);
 
       if (!mounted) return;
+
+      if (response['success'] != true) {
+        AppSnackbar.showError(
+          context,
+          response['message'] ?? 'Failed to send OTP. Please try again.',
+        );
+        return;
+      }
 
       Navigator.push(
         context,
@@ -73,6 +77,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
           const SignupFieldLabel(label: 'Phone Number'),
           SignupPhoneField(
             controller: _phoneController,
+            onCountryCodeChanged: (code) => setState(() => _countryCode = code),
             validator: (v) {
               if (v == null || v.trim().isEmpty) {
                 return 'Please enter your phone number';

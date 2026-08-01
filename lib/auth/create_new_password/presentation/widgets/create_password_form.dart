@@ -110,6 +110,7 @@ class _CreatePasswordFormState extends State<CreatePasswordForm> {
 
   String? _validatePassword(String? v) {
     if (v == null || v.isEmpty) return 'Please enter a password';
+    if (v.contains(' ')) return 'Password cannot contain spaces';
     if (v.length < 8) return 'Password must be at least 8 characters';
     if (!v.contains(RegExp(r'[A-Z]'))) {
       return 'Password must contain at least one uppercase letter';

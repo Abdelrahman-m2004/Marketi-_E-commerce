@@ -31,6 +31,7 @@ class _SignupFormState extends State<SignupForm> {
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
   bool _isLoading = false;
+  String _countryCode = '+20';
 
   @override
   void dispose() {
@@ -69,7 +70,7 @@ class _SignupFormState extends State<SignupForm> {
         name: _nameController.text.trim(),
         username: _usernameController.text.trim(),
         phone: _phoneController.text.trim(),
-        countryPhoneCode: '+20',
+        countryPhoneCode: _countryCode,
         email: _emailController.text.trim(),
         password: _passwordController.text,
       );
@@ -148,6 +149,7 @@ class _SignupFormState extends State<SignupForm> {
           const SignupFieldLabel(label: 'Phone Number'),
           SignupPhoneField(
             controller: _phoneController,
+            onCountryCodeChanged: (code) => setState(() => _countryCode = code),
             validator: (v) {
               if (v == null || v.trim().isEmpty) return 'Please enter your phone number';
               final digits = v.replaceAll(RegExp(r'\D'), '');
@@ -164,9 +166,8 @@ class _SignupFormState extends State<SignupForm> {
             keyboardType: TextInputType.emailAddress,
             validator: (v) {
               if (v == null || v.trim().isEmpty) return 'Please enter your email';
-              // Strict email regex: must have @, a domain, and a TLD (e.g. .com)
               final emailRegex = RegExp(
-                  r'^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$');
+                  r'^[a-zA-Z][a-zA-Z0-9._%+\-]*@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$');
               if (!emailRegex.hasMatch(v.trim())) {
                 return 'Please enter a valid email (e.g. user@example.com)';
               }
@@ -182,6 +183,7 @@ class _SignupFormState extends State<SignupForm> {
             obscureText: _obscurePassword,
             validator: (v) {
               if (v == null || v.isEmpty) return 'Please enter a password';
+              if (v.contains(' ')) return 'Password cannot contain spaces';
               if (v.length < 8) return 'Password must be at least 8 characters';
               if (!v.contains(RegExp(r'[A-Z]'))) {
                 return 'Password must contain at least one uppercase letter';
