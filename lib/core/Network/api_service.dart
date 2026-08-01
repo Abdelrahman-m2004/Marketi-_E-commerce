@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:marketi/core/Network/token_storage.dart';
+import 'package:marketi/core/Network/Apiconstant.dart';
 import 'package:marketi/features/payment/data/models/payment_model.dart';
+import 'dart:io';
 
 class ApiService {
   // Singleton instance لضمان نفس الـ Dio session بين الـ requests
@@ -255,6 +257,28 @@ class ApiService {
     final response = await dio.post(
       '/payments/mock/$paymentId/complete',
       options: Options(headers: {'Authorization': 'Bearer $token'}),
+    );
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> uploadProfileImage(File imageFile) async {
+    final token = await TokenStorage.getToken();
+    final formData = FormData.fromMap({
+      'profile_image': await MultipartFile.fromFile(
+        imageFile.path,
+        filename: imageFile.path.split('/').last,
+      ),
+      '_method': 'PUT',
+    });
+    final response = await dio.post(
+      Apiconstant.update_profile,
+      data: formData,
+      options: Options(
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'multipart/form-data',
+        },
+      ),
     );
     return response.data;
   }

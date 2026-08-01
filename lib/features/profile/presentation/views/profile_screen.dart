@@ -1,6 +1,9 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:marketi/auth/login/presentation/views/login_view.dart';
+import 'package:marketi/core/Network/api_service.dart';
 import 'package:marketi/core/Network/token_storage.dart';
 import 'package:marketi/core/fonts/AppFonts.dart';
 import 'package:marketi/core/service/service_locator.dart';
@@ -21,6 +24,8 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   late final ProfileCubit _profileCubit;
+  File? _localImage;
+  bool _uploadingImage = false;
 
   @override
   void initState() {
@@ -32,6 +37,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void dispose() {
     _profileCubit.close();
     super.dispose();
+  }
+
+  Future<void> _pickAndUploadImage() async {
+    final picker = ImagePicker();
+    final picked = await picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 80,
+      maxWidth: 800,
+    );
+    if (picked == null) return;
+
+    final file = File(picked.path);
+    setState(() {
+      _localImage = file;
+      _uploadingImage = true;
+    });
+
+    try {
+      await ApiService().uploadProfileImage(file);
+      _profileCubit.getProfile(); // refresh profile
+    } catch (_) {
+      // keep local image shown even if upload fails
+    } finally {
+      if (mounted) setState(() => _uploadingImage = false);
+    }
   }
 
   @override
@@ -89,25 +119,70 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Container(
-                                    padding: const EdgeInsets.all(2),
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      border: Border.all(color: Colors.blue, width: 1.5),
-                                    ),
-                                    child: ClipOval(
-                                      child: Image.network(
-                                        user.profileImage ?? '',
-                                        width: 100,
-                                        height: 100,
-                                        fit: BoxFit.cover,
-                                        errorBuilder: (_, __, ___) => Image.asset(
-                                          'assets/image/image.png',
-                                          width: 100,
-                                          height: 100,
-                                          fit: BoxFit.cover,
+                                  GestureDetector(
+                                    onTap: _pickAndUploadImage,
+                                    child: Stack(
+                                      children: [
+                                        Container(
+                                          padding: const EdgeInsets.all(2),
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            border: Border.all(color: Colors.blue, width: 1.5),
+                                          ),
+                                          child: ClipOval(
+                                            child: _localImage != null
+                                                ? Image.file(
+                                                    _localImage!,
+                                                    width: 100,
+                                                    height: 100,
+                                                    fit: BoxFit.cover,
+                                                  )
+                                                : Image.network(
+                                                    user.profileImage ?? '',
+                                                    width: 100,
+                                                    height: 100,
+                                                    fit: BoxFit.cover,
+                                                    errorBuilder: (_, __, ___) => Image.asset(
+                                                      'assets/image/image.png',
+                                                      width: 100,
+                                                      height: 100,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+                                          ),
                                         ),
-                                      ),
+                                        if (_uploadingImage)
+                                          Positioned.fill(
+                                            child: Container(
+                                              decoration: const BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Colors.black38,
+                                              ),
+                                              child: const Center(
+                                                child: CircularProgressIndicator(
+                                                  strokeWidth: 2,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        Positioned(
+                                          bottom: 0,
+                                          right: 0,
+                                          child: Container(
+                                            padding: const EdgeInsets.all(4),
+                                            decoration: const BoxDecoration(
+                                              color: Color(0xff3F80FF),
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: const Icon(
+                                              Icons.camera_alt,
+                                              color: Colors.white,
+                                              size: 14,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                   const SizedBox(height: 10),
