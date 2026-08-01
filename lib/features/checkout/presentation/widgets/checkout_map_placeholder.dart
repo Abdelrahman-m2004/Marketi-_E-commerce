@@ -3,10 +3,13 @@ import 'package:marketi/core/Fonts/AppFonts.dart';
 import 'package:marketi/core/theming/colors.dart';
 
 class CheckoutMapPlaceholder extends StatelessWidget {
-  const CheckoutMapPlaceholder({super.key});
+  final String address;
+  const CheckoutMapPlaceholder({super.key, this.address = 'Anshas'});
 
   @override
   Widget build(BuildContext context) {
+    // Show first word of address as map label
+    final label = address.split(',').first.trim();
     return ClipRRect(
       borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
       child: SizedBox(
@@ -63,7 +66,7 @@ class CheckoutMapPlaceholder extends StatelessWidget {
                     size: 34,
                   ),
                   Text(
-                    'Anshas',
+                    label,
                     style: AppFonts.fontMedium.copyWith(
                       color: AppColors.Dark_Blue_700,
                       fontSize: 10,

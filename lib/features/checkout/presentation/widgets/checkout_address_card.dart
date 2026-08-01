@@ -6,7 +6,8 @@ import 'package:marketi/core/theming/icons.dart';
 import 'package:marketi/features/checkout/presentation/widgets/checkout_map_placeholder.dart';
 
 class CheckoutAddressCard extends StatefulWidget {
-  const CheckoutAddressCard({super.key});
+  final void Function(String address)? onAddressChanged;
+  const CheckoutAddressCard({super.key, this.onAddressChanged});
 
   @override
   State<CheckoutAddressCard> createState() => _CheckoutAddressCardState();
@@ -19,53 +20,68 @@ class _CheckoutAddressCardState extends State<CheckoutAddressCard> {
   void _showChangeAddressDialog() {
     final addressCtrl = TextEditingController(text: _address);
     final phoneCtrl = TextEditingController(text: _phone);
+    String? phoneError;
 
     showDialog(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Change Address'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: addressCtrl,
-              decoration: const InputDecoration(
-                labelText: 'Delivery Address',
-                border: OutlineInputBorder(),
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setDialogState) => AlertDialog(
+          title: const Text('Change Address'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: addressCtrl,
+                decoration: const InputDecoration(
+                  labelText: 'Delivery Address',
+                  border: OutlineInputBorder(),
+                ),
+                maxLines: 2,
               ),
-              maxLines: 2,
+              const SizedBox(height: 12),
+              TextField(
+                controller: phoneCtrl,
+                decoration: InputDecoration(
+                  labelText: 'Mobile Number',
+                  border: const OutlineInputBorder(),
+                  errorText: phoneError,
+                ),
+                keyboardType: TextInputType.phone,
+                onChanged: (_) {
+                  if (phoneError != null) {
+                    setDialogState(() => phoneError = null);
+                  }
+                },
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: const Text('Cancel'),
             ),
-            const SizedBox(height: 12),
-            TextField(
-              controller: phoneCtrl,
-              decoration: const InputDecoration(
-                labelText: 'Mobile Number',
-                border: OutlineInputBorder(),
-              ),
-              keyboardType: TextInputType.phone,
+            ElevatedButton(
+              onPressed: () {
+                final phone = phoneCtrl.text.trim();
+                final digits = phone.replaceAll(RegExp(r'\D'), '');
+                if (digits.length < 10 || digits.length > 13) {
+                  setDialogState(() =>
+                      phoneError = 'Please enter a valid mobile number');
+                  return;
+                }
+                setState(() {
+                  _address = addressCtrl.text.trim().isNotEmpty
+                      ? addressCtrl.text.trim()
+                      : _address;
+                  _phone = phone.isNotEmpty ? phone : _phone;
+                });
+                widget.onAddressChanged?.call(_address);
+                Navigator.pop(ctx);
+              },
+              child: const Text('Save'),
             ),
           ],
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: const Text('Cancel'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              setState(() {
-                _address = addressCtrl.text.trim().isNotEmpty
-                    ? addressCtrl.text.trim()
-                    : _address;
-                _phone = phoneCtrl.text.trim().isNotEmpty
-                    ? phoneCtrl.text.trim()
-                    : _phone;
-              });
-              Navigator.pop(ctx);
-            },
-            child: const Text('Save'),
-          ),
-        ],
       ),
     );
   }
@@ -81,7 +97,7 @@ class _CheckoutAddressCardState extends State<CheckoutAddressCard> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const CheckoutMapPlaceholder(),
+          CheckoutMapPlaceholder(address: _address),
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
             child: Column(

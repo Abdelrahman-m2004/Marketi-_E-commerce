@@ -32,13 +32,15 @@ class CheckoutView extends StatefulWidget {
 class _CheckoutViewState extends State<CheckoutView> {
   bool _isLoading = false;
   String _selectedPaymentType = 'cash_on_delivery';
+  double _discount = 0.0;
+  String _deliveryAddress = 'Anshas, Al-sharqia, Egypt.';
 
   Future<void> _placeOrder() async {
     setState(() => _isLoading = true);
 
     try {
       final response = await ApiService().placeOrder(
-        deliveryAddress: 'Anshas, Al-sharqia, Egypt.',
+        deliveryAddress: _deliveryAddress,
         deliverySlotId: 1,
         notes: '',
         paymentType: _selectedPaymentType,
@@ -113,7 +115,10 @@ class _CheckoutViewState extends State<CheckoutView> {
                     const SizedBox(height: 16),
                     const CheckoutSectionTitle(title: 'Address'),
                     const SizedBox(height: 6),
-                    const CheckoutAddressCard(),
+                    CheckoutAddressCard(
+                      onAddressChanged: (addr) =>
+                          setState(() => _deliveryAddress = addr),
+                    ),
                     const SizedBox(height: 14),
                     const CheckoutSectionTitle(title: 'Delivery time'),
                     const SizedBox(height: 6),
@@ -127,7 +132,13 @@ class _CheckoutViewState extends State<CheckoutView> {
                           setState(() => _selectedPaymentType = value),
                     ),
                     const SizedBox(height: 8),
-                    const CheckoutVoucherField(),
+                    CheckoutVoucherField(
+                      onVoucherApplied: (discountPercent) {
+                        setState(() {
+                          _discount = widget.subtotal * discountPercent / 100;
+                        });
+                      },
+                    ),
                     const SizedBox(height: 14),
                     const CheckoutSectionTitle(title: 'Payment'),
                     const SizedBox(height: 6),
@@ -135,6 +146,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                       itemCount: widget.itemCount,
                       subtotal: widget.subtotal,
                       deliveryFee: widget.deliveryFee,
+                      discount: _discount,
                     ),
                     const SizedBox(height: 12),
                   ],

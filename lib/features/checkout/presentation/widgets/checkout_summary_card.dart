@@ -6,12 +6,14 @@ class CheckoutSummaryCard extends StatelessWidget {
   final int itemCount;
   final double subtotal;
   final double deliveryFee;
+  final double discount;
 
   const CheckoutSummaryCard({
     super.key,
     required this.itemCount,
     required this.subtotal,
     required this.deliveryFee,
+    this.discount = 0.0,
   });
 
   String _format(double amount) =>
@@ -19,7 +21,7 @@ class CheckoutSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final total = subtotal + deliveryFee;
+    final total = subtotal + deliveryFee - discount;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
@@ -39,13 +41,20 @@ class CheckoutSummaryCard extends StatelessWidget {
             label: 'Delivery Fee',
             value: 'EGP ${_format(deliveryFee)}',
           ),
+          if (discount > 0) ...[
+            const SizedBox(height: 6),
+            _SummaryRow(
+              label: 'Discount',
+              value: '- EGP ${_format(discount)}',
+              isDiscount: true,
+            ),
+          ],
           const SizedBox(height: 8),
-          // Dashed divider
           _DashedLine(color: AppColors.Light_Blue_500),
           const SizedBox(height: 8),
           _SummaryRow(
             label: 'Total',
-            value: 'EGP ${_format(total)}',
+            value: 'EGP ${_format(total < 0 ? 0 : total)}',
             isBold: true,
           ),
         ],
@@ -58,11 +67,13 @@ class _SummaryRow extends StatelessWidget {
   final String label;
   final String value;
   final bool isBold;
+  final bool isDiscount;
 
   const _SummaryRow({
     required this.label,
     required this.value,
     this.isBold = false,
+    this.isDiscount = false,
   });
 
   @override
@@ -73,10 +84,16 @@ class _SummaryRow extends StatelessWidget {
             fontWeight: FontWeight.w700,
             fontSize: 14,
           )
-        : AppFonts.bodyMedium.copyWith(
-            color: AppColors.navy,
-            fontSize: 13,
-          );
+        : isDiscount
+            ? AppFonts.bodyMedium.copyWith(
+                color: const Color(0xff22C55E),
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+              )
+            : AppFonts.bodyMedium.copyWith(
+                color: AppColors.navy,
+                fontSize: 13,
+              );
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
