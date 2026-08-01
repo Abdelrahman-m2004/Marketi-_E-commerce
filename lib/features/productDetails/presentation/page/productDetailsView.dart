@@ -17,6 +17,7 @@ class ProductDetailsView extends StatefulWidget {
 
 class _ProductDetailsViewState extends State<ProductDetailsView> {
   String? _selectedSize;
+  double? _selectedSizePrice;
   bool _isAddingToCart = false;
 
   Future<void> _addToCart(int productId) async {
@@ -213,8 +214,10 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                       final isSelected =
                                           _selectedSize == s.size;
                                       return GestureDetector(
-                                        onTap: () => setState(
-                                            () => _selectedSize = s.size),
+                                        onTap: () => setState(() {
+                                          _selectedSize = s.size;
+                                          _selectedSizePrice = s.price;
+                                        }),
                                         child: Container(
                                           width: 55,
                                           height: 48,
@@ -279,7 +282,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                 style: TextStyle(
                                     color: Colors.grey, fontSize: 12)),
                             Text(
-                              "${product.price} EGP",
+                              "${_selectedSizePrice ?? product.price} EGP",
                               style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,

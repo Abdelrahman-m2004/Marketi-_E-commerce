@@ -5,6 +5,7 @@ class Productsizemodel extends Productsizeentity {
     required super.product_id,
     required super.size,
     required super.quantity,
+    super.price,
   });
 
   factory Productsizemodel.fromJson(Map<String, dynamic> json) {
@@ -12,6 +13,9 @@ class Productsizemodel extends Productsizeentity {
       product_id: json['product_id'],
       size: json['size'],
       quantity: json['stock_quantity'],
+      price: json['price'] != null
+          ? double.tryParse(json['price'].toString())
+          : null,
     );
   }
 }
